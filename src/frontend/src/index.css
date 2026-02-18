@@ -4,7 +4,7 @@
 
 @layer base {
     :root {
-        --radius: 0.125rem;
+        --radius: 0.5rem;
         
         /* Navy Blue Primary - Professional and trustworthy */
         --navy: 0.25 0.15 240;
@@ -14,6 +14,15 @@
         --gold: 0.75 0.12 75;
         --gold-dark: 0.65 0.12 70;
         --gold-light: 0.85 0.10 80;
+        
+        /* Accent Blue - Modern and professional */
+        --accent-blue: 0.55 0.18 230;
+        --accent-blue-light: 0.65 0.15 235;
+        
+        /* Slate - Neutral professional tones */
+        --slate: 0.45 0.02 240;
+        --slate-light: 0.96 0.01 240;
+        --slate-dark: 0.35 0.02 240;
         
         /* Light Mode Colors */
         --background: 0.98 0 0;
@@ -26,15 +35,15 @@
         --primary-foreground: 0.98 0 0;
         --secondary: 0.75 0.12 75;
         --secondary-foreground: 0.20 0.05 240;
-        --muted: 0.94 0 0;
+        --muted: 0.94 0.01 240;
         --muted-foreground: 0.50 0.05 240;
         --accent: 0.75 0.12 75;
         --accent-foreground: 0.20 0.05 240;
         --destructive: 0.577 0.245 27.325;
         --destructive-foreground: 0.98 0 0;
-        --border: 0.88 0 0;
-        --input: 0.88 0 0;
-        --ring: 0.75 0.12 75;
+        --border: 0.90 0.01 240;
+        --input: 0.90 0.01 240;
+        --ring: 0.55 0.18 230;
         --chart-1: 0.646 0.222 41.116;
         --chart-2: 0.6 0.118 184.704;
         --chart-3: 0.398 0.07 227.392;
@@ -99,6 +108,14 @@
         border-color: oklch(var(--navy));
     }
     
+    .text-navy-dark {
+        color: oklch(var(--navy-dark));
+    }
+    
+    .bg-navy-dark {
+        background-color: oklch(var(--navy-dark));
+    }
+    
     .text-gold {
         color: oklch(var(--gold));
     }
@@ -117,5 +134,29 @@
     
     .text-gold-light {
         color: oklch(var(--gold-light));
+    }
+    
+    .text-accent-blue {
+        color: oklch(var(--accent-blue));
+    }
+    
+    .bg-accent-blue {
+        background-color: oklch(var(--accent-blue));
+    }
+    
+    .border-accent-blue {
+        border-color: oklch(var(--accent-blue));
+    }
+    
+    .bg-slate {
+        background-color: oklch(var(--slate));
+    }
+    
+    .bg-slate-light {
+        background-color: oklch(var(--slate-light));
+    }
+    
+    .bg-slate-dark {
+        background-color: oklch(var(--slate-dark));
     }
 }

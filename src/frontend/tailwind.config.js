@@ -30,6 +30,15 @@ export default {
                     dark: 'oklch(var(--gold-dark))',
                     light: 'oklch(var(--gold-light))'
                 },
+                'accent-blue': {
+                    DEFAULT: 'oklch(var(--accent-blue))',
+                    light: 'oklch(var(--accent-blue-light))'
+                },
+                slate: {
+                    DEFAULT: 'oklch(var(--slate))',
+                    light: 'oklch(var(--slate-light))',
+                    dark: 'oklch(var(--slate-dark))'
+                },
                 primary: {
                     DEFAULT: 'oklch(var(--primary) / <alpha-value>)',
                     foreground: 'oklch(var(--primary-foreground))'
@@ -82,10 +91,13 @@ export default {
                 sm: 'calc(var(--radius) - 4px)'
             },
             boxShadow: {
-                xs: '0 1px 2px 0 rgba(0,0,0,0.05)'
+                xs: '0 1px 2px 0 rgba(0,0,0,0.05)',
+                'soft': '0 4px 20px rgba(0,0,0,0.08)',
+                'soft-lg': '0 8px 30px rgba(0,0,0,0.12)'
             },
             fontFamily: {
                 sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'sans-serif'],
+                heading: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
             },
             keyframes: {
                 'accordion-down': {

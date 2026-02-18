@@ -1,54 +1,97 @@
-import { Badge } from '@/components/ui/badge';
-import { Award } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 export default function CompaniesSection() {
-  const companies = [
-    'Mutual of Omaha',
-    'FNG',
-    'Transamerica',
-    'Ethos',
-    'Forrester',
-    'And Many More'
+  const carriers = [
+    {
+      name: 'Mutual of Omaha',
+      logo: '/assets/generated/mutual-of-omaha-logo.dim_200x100.png',
+    },
+    {
+      name: 'Transamerica',
+      logo: '/assets/generated/transamerica-logo.dim_200x100.png',
+    },
+    {
+      name: 'Ethos',
+      logo: '/assets/generated/ethos-logo.dim_200x80.png',
+    },
+    {
+      name: 'Fidelity and Guaranteed Life',
+      logo: '/assets/generated/fidelity-guaranteed-life-logo.dim_200x100.png',
+    },
+    {
+      name: 'Forrester',
+      logo: '/assets/generated/forrester-logo.dim_200x80.png',
+    },
   ];
 
   return (
-    <section className="py-20 bg-navy text-white">
+    <section className="py-20 bg-gradient-to-br from-navy/5 via-background to-slate-light">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
-          <div className="flex justify-center mb-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-sm bg-gold/20 border border-gold">
-              <Award className="w-5 h-5 text-gold" />
-              <span className="text-gold font-semibold">A-Rated Carriers</span>
-            </div>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Access to Top Insurance Companies
+          <h2 className="text-4xl md:text-5xl font-bold text-navy mb-4">
+            Trusted A+ Rated Carriers
           </h2>
-          <p className="text-lg text-white/80 max-w-3xl mx-auto">
-            As an independent broker, I work with all the leading A-rated insurance companies in the country. 
-            This means I can shop the market to find you the best coverage at the most competitive rates.
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+            As an independent broker, I work with all the top-rated insurance companies in the country. 
+            This means I can shop the market to find you the best rates and coverage options, 
+            without being limited to a single company's products.
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-            {companies.map((company) => (
-              <div
-                key={company}
-                className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-sm p-6 text-center hover:bg-white/15 transition-all duration-300 hover:border-gold"
-              >
-                <p className="font-semibold text-lg text-white">{company}</p>
-              </div>
-            ))}
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto mb-8">
+          {carriers.map((carrier) => (
+            <Card
+              key={carrier.name}
+              className="border-2 border-border hover:border-accent-blue transition-all duration-300 hover:shadow-lg rounded-xl bg-white/90 backdrop-blur-sm"
+            >
+              <CardContent className="p-6 flex items-center justify-center h-[200px]">
+                <img
+                  src={carrier.logo}
+                  alt={carrier.name}
+                  className="max-w-full max-h-full w-auto h-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                />
+              </CardContent>
+            </Card>
+          ))}
 
-          <div className="bg-gold/10 border border-gold/30 rounded-sm p-6 text-center">
-            <p className="text-white/90 text-base leading-relaxed">
-              <span className="font-semibold text-gold">Why it matters:</span> Working with multiple carriers 
-              allows me to compare policies and pricing to ensure you get the best value. You're not limited 
-              to one company's products—you get access to the entire market.
-            </p>
-          </div>
+          <Card className="border-2 border-dashed border-gold hover:border-gold-dark transition-all duration-300 hover:shadow-lg rounded-xl bg-gradient-to-br from-gold/5 to-gold/10">
+            <CardContent className="p-6 flex items-center justify-center h-[200px]">
+              <div className="text-center">
+                <p className="text-3xl font-bold text-gold mb-1">+25</p>
+                <p className="text-sm font-semibold text-navy">Other Carriers</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="max-w-3xl mx-auto">
+          <Card className="border-2 border-accent-blue/30 bg-gradient-to-br from-accent-blue/5 to-transparent rounded-xl shadow-lg">
+            <CardContent className="p-8">
+              <h3 className="text-xl font-bold text-navy mb-4 text-center">
+                Why Choose an Independent Broker?
+              </h3>
+              <ul className="space-y-3">
+                <li className="flex items-start">
+                  <span className="inline-block w-2 h-2 rounded-full bg-accent-blue mt-2 mr-3 flex-shrink-0" />
+                  <span className="text-foreground/80">
+                    <strong className="text-navy">Unbiased Recommendations:</strong> I work for you, not the insurance company
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <span className="inline-block w-2 h-2 rounded-full bg-accent-blue mt-2 mr-3 flex-shrink-0" />
+                  <span className="text-foreground/80">
+                    <strong className="text-navy">Best Rates:</strong> I compare quotes from multiple carriers to find you the lowest price
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <span className="inline-block w-2 h-2 rounded-full bg-accent-blue mt-2 mr-3 flex-shrink-0" />
+                  <span className="text-foreground/80">
+                    <strong className="text-navy">More Options:</strong> Access to 30+ A+ rated carriers means more choices for your unique needs
+                  </span>
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>

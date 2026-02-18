@@ -1,10 +1,43 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useState } from 'react';
+
+const US_STATES = [
+  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
+  'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
+  'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
+  'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico',
+  'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania',
+  'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+];
 
 export default function ContactSection() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    state: '',
+    productInterest: '',
+    coverageAmount: '',
+    age: '',
+    additionalComments: '',
+    gender: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Form submission logic would go here
+    console.log('Form submitted:', formData);
+  };
+
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section id="contact" className="py-20 bg-gradient-to-br from-slate-light via-background to-accent-blue/5">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-navy mb-4">
@@ -16,79 +49,217 @@ export default function ContactSection() {
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <Card className="border-2 border-border rounded-sm shadow-lg">
-            <CardHeader className="text-center bg-navy/5 border-b-2 border-border">
-              <CardTitle className="text-3xl font-bold text-navy">Contact Information</CardTitle>
+          <Card className="border-2 border-border rounded-xl shadow-2xl bg-white/90 backdrop-blur-sm">
+            <CardHeader className="text-center bg-gradient-to-br from-navy/5 to-accent-blue/5 border-b-2 border-border rounded-t-xl">
+              <CardTitle className="text-3xl font-bold text-navy">Get Your Free Quote</CardTitle>
               <CardDescription className="text-base">
-                I'm here to help you find the right insurance solution
+                Fill out the form below and I'll get back to you within 24 hours
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-8">
-              <div className="grid md:grid-cols-2 gap-8">
-                {/* Contact Details */}
-                <div className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6 mb-8">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName" className="text-navy font-semibold">
+                      First Name *
+                    </Label>
+                    <Input
+                      id="firstName"
+                      type="text"
+                      required
+                      value={formData.firstName}
+                      onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                      className="rounded-lg border-2 border-border focus:border-accent-blue"
+                      placeholder="John"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName" className="text-navy font-semibold">
+                      Last Name *
+                    </Label>
+                    <Input
+                      id="lastName"
+                      type="text"
+                      required
+                      value={formData.lastName}
+                      onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                      className="rounded-lg border-2 border-border focus:border-accent-blue"
+                      placeholder="Doe"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="state" className="text-navy font-semibold">
+                    State *
+                  </Label>
+                  <Select
+                    value={formData.state}
+                    onValueChange={(value) => setFormData({ ...formData, state: value })}
+                    required
+                  >
+                    <SelectTrigger id="state" className="rounded-lg border-2 border-border focus:border-accent-blue">
+                      <SelectValue placeholder="Select your state" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {US_STATES.map((state) => (
+                        <SelectItem key={state} value={state}>
+                          {state}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="productInterest" className="text-navy font-semibold">
+                    Product Interest *
+                  </Label>
+                  <Select
+                    value={formData.productInterest}
+                    onValueChange={(value) => setFormData({ ...formData, productInterest: value })}
+                    required
+                  >
+                    <SelectTrigger id="productInterest" className="rounded-lg border-2 border-border focus:border-accent-blue">
+                      <SelectValue placeholder="Select product type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="life-insurance">Life Insurance</SelectItem>
+                      <SelectItem value="annuities">Annuities</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="coverageAmount" className="text-navy font-semibold">
+                    Coverage Amount
+                  </Label>
+                  <Input
+                    id="coverageAmount"
+                    type="text"
+                    value={formData.coverageAmount}
+                    onChange={(e) => setFormData({ ...formData, coverageAmount: e.target.value })}
+                    className="rounded-lg border-2 border-border focus:border-accent-blue"
+                    placeholder="e.g., $500,000"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="age" className="text-navy font-semibold">
+                    Age *
+                  </Label>
+                  <Input
+                    id="age"
+                    type="number"
+                    required
+                    min="18"
+                    max="120"
+                    value={formData.age}
+                    onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                    className="rounded-lg border-2 border-border focus:border-accent-blue"
+                    placeholder="e.g., 35"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="additionalComments" className="text-navy font-semibold">
+                    Additional Comments
+                  </Label>
+                  <Textarea
+                    id="additionalComments"
+                    rows={4}
+                    value={formData.additionalComments}
+                    onChange={(e) => setFormData({ ...formData, additionalComments: e.target.value })}
+                    className="rounded-lg border-2 border-border focus:border-accent-blue resize-none"
+                    placeholder="Please share any relevant health conditions, medications, or additional information that would help us provide you with the best coverage options..."
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <Label className="text-navy font-semibold">
+                    Gender *
+                  </Label>
+                  <RadioGroup
+                    value={formData.gender}
+                    onValueChange={(value) => setFormData({ ...formData, gender: value })}
+                    required
+                    className="flex gap-6"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="male" id="male" className="border-2 border-border" />
+                      <Label htmlFor="male" className="text-foreground/80 font-normal cursor-pointer">
+                        Male
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="female" id="female" className="border-2 border-border" />
+                      <Label htmlFor="female" className="text-foreground/80 font-normal cursor-pointer">
+                        Female
+                      </Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full bg-gradient-to-r from-gold to-gold-dark hover:from-gold-dark hover:to-gold text-navy font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all"
+                >
+                  Submit Request
+                </Button>
+              </form>
+
+              <div className="border-t-2 border-border pt-8">
+                <h3 className="text-xl font-bold text-navy mb-6 text-center">Or Contact Me Directly</h3>
+                <div className="grid md:grid-cols-2 gap-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-sm bg-navy/10 flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-6 h-6 text-navy" />
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-accent-blue/20 to-accent-blue/10 flex items-center justify-center flex-shrink-0 shadow-md">
+                      <MapPin className="w-6 h-6 text-accent-blue" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-navy mb-1">Location</h3>
-                      <p className="text-foreground/80">Miami, Florida</p>
-                      <p className="text-sm text-muted-foreground mt-1">Serving all of Florida</p>
+                      <h4 className="font-semibold text-navy mb-1">Location</h4>
+                      <p className="text-foreground/80">Licensed in all 50 states</p>
+                      <p className="text-sm text-muted-foreground mt-1">Equity Insurance Partners</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-sm bg-navy/10 flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-6 h-6 text-navy" />
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-accent-blue/20 to-accent-blue/10 flex items-center justify-center flex-shrink-0 shadow-md">
+                      <Phone className="w-6 h-6 text-accent-blue" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-navy mb-1">Phone</h3>
-                      <p className="text-foreground/80">(555) 123-4567</p>
+                      <h4 className="font-semibold text-navy mb-1">Phone</h4>
+                      <a href="tel:239-331-0544" className="text-foreground/80 hover:text-accent-blue transition-colors">
+                        239-331-0544
+                      </a>
                       <p className="text-sm text-muted-foreground mt-1">Call or text anytime</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-sm bg-navy/10 flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-6 h-6 text-navy" />
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-accent-blue/20 to-accent-blue/10 flex items-center justify-center flex-shrink-0 shadow-md">
+                      <Mail className="w-6 h-6 text-accent-blue" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-navy mb-1">Email</h3>
-                      <p className="text-foreground/80">jonathan@insurancebroker.com</p>
+                      <h4 className="font-semibold text-navy mb-1">Email</h4>
+                      <a href="mailto:jonathanayan.eip@gmail.com" className="text-foreground/80 hover:text-accent-blue transition-colors">
+                        jonathanayan.eip@gmail.com
+                      </a>
                       <p className="text-sm text-muted-foreground mt-1">I'll respond within 24 hours</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-sm bg-navy/10 flex items-center justify-center flex-shrink-0">
-                      <Clock className="w-6 h-6 text-navy" />
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-accent-blue/20 to-accent-blue/10 flex items-center justify-center flex-shrink-0 shadow-md">
+                      <Clock className="w-6 h-6 text-accent-blue" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-navy mb-1">Availability</h3>
-                      <p className="text-foreground/80">Monday - Friday: 9am - 6pm</p>
-                      <p className="text-sm text-muted-foreground mt-1">Weekend appointments available</p>
+                      <h4 className="font-semibold text-navy mb-1">Availability</h4>
+                      <p className="text-foreground/80">Available anytime</p>
+                      <p className="text-sm text-muted-foreground mt-1">Flexible scheduling to fit your needs</p>
                     </div>
                   </div>
-                </div>
-
-                {/* CTA Section */}
-                <div className="flex flex-col justify-center bg-navy/5 rounded-sm p-8 border-2 border-gold/20">
-                  <h3 className="text-2xl font-bold text-navy mb-4">
-                    Free Consultation
-                  </h3>
-                  <p className="text-foreground/80 mb-6 leading-relaxed">
-                    No obligation, no pressure. Let's have a conversation about your insurance needs and I'll provide honest recommendations tailored to your situation.
-                  </p>
-                  <Button
-                    size="lg"
-                    className="bg-gold hover:bg-gold-dark text-navy font-semibold rounded-sm shadow-md hover:shadow-lg transition-all"
-                  >
-                    Schedule a Call
-                  </Button>
-                  <p className="text-sm text-muted-foreground mt-4 text-center">
-                    Most consultations take 15-30 minutes
-                  </p>
                 </div>
               </div>
             </CardContent>

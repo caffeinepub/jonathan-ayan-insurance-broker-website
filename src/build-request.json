@@ -1,111 +1,40 @@
 {
   "kind": "build_request",
-  "title": "Create insurance broker homepage for Jonathan Ayan",
-  "projectName": "Ayan Insurance Services",
-  "priority": "normal",
+  "title": "Fix insurance company logo display to show complete logos without cropping",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-1",
-      "text": "Create a professional homepage that introduces Jonathan Ayan as a life and annuity insurance broker based in Miami, Florida",
+      "id": "REQ-28",
+      "text": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), modify the logo display implementation to ensure all five insurance company logos (Mutual of Omaha, Transamerica, Ethos, Fidelity and Guaranteed Life, and Forrester) are shown in their entirety without any cropping or cutoff, by adjusting container dimensions, object-fit properties, padding, and aspect ratio constraints so that each logo's full visual content is visible",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-user-final"
         ],
         "quotes": [
-          "my name is Jonathan Ayan I am living in Miami Florida"
+          "yes looks good now i need you to fix the Insurance company logos. It is still cut off and I cannot see the whole thing."
         ]
       },
       "acceptanceCriteria": [
-        "Homepage displays Jonathan Ayan's name prominently",
-        "Location (Miami, Florida) is clearly visible",
-        "Professional introduction describes broker services"
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "text": "Display a section showcasing the A-rated insurance companies Jonathan represents, including Mutual of Omaha, FNG, Transamerica, Ethos, and Forrester",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "I have access to all the A rated companies in the country as in Mutual of Omaha FNG annuities in life, Transamerica ethos Forrester, and a few others"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Section lists at least: Mutual of Omaha, FNG, Transamerica, Ethos, Forrester",
-        "Companies are presented in a clean, organized format",
-        "Section emphasizes A-rated status of companies"
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Create a services section explaining life insurance and annuities offerings with clear descriptions of what assistance is available",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "can offer any assistance with life insurance or annuities"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Life insurance services are explained",
-        "Annuities services are explained",
-        "Content clearly communicates available assistance"
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Include contact information section for potential clients to reach Jonathan Ayan",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Contact section is easily accessible",
-        "Section includes relevant contact methods"
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "text": "Design the homepage with a professional, trustworthy visual theme using warm, sophisticated colors (such as navy blue, gold accents, and crisp whites), clean typography, and a layout that conveys stability and expertise appropriate for financial services",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Color scheme uses professional, trust-building colors",
-        "Typography is clear and professional",
-        "Layout conveys stability and expertise",
-        "Design is consistent across all homepage sections"
+        "All five carrier logos display completely without any portions being cut off",
+        "Logo aspect ratios are maintained properly",
+        "No visual cropping occurs on any logo element",
+        "The '+25 other carriers' card remains properly styled and positioned"
       ]
     }
   ],
   "constraints": [
-    "Keep the website simple and focused on a single homepage",
-    "Maintain professional tone appropriate for insurance services"
+    "Do not replace the actual logo image files",
+    "Maintain the existing layout structure of the CompaniesSection",
+    "Keep the '+25 other carriers' indicator in place"
   ],
   "nonGoals": [
-    "Multi-page website navigation",
-    "Online quote calculators or insurance application forms",
-    "Client portal or login functionality",
-    "Blog or news section",
-    "Integration with third-party insurance APIs"
+    "Sourcing new logo files",
+    "Changing the number of logos displayed",
+    "Modifying other sections of the website"
   ],
   "imageRequirements": {
-    "required": [
-      "Professional hero background image showing Miami skyline or financial security theme (hero-background.dim_1920x600.png)",
-      "Simple icon representing life insurance protection (life-insurance-icon.dim_64x64.png)",
-      "Simple icon representing annuities and retirement planning (annuities-icon.dim_64x64.png)"
-    ],
+    "required": [],
     "edits": []
   }
 }

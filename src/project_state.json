@@ -1,15 +1,27 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
-  "summary": "Professional website for Jonathan Ayan, a life and annuity insurance broker in Miami, Florida. Homepage showcasing broker information, services offered, and A-rated insurance companies represented (Mutual of Omaha, FNG, Transamerica, Ethos, Forrester, and others).",
+  "projectStateVersion": 27,
+  "summary": "Professional website for Jonathan Ayan, a life and annuity insurance broker working for Equity Insurance Partners. Licensed to serve clients in all 50 states. Homepage showcasing broker information, services offered, and A+ rated insurance companies represented (Mutual of Omaha, FNG, Transamerica, Ethos, Forrester, and others). Contact: jonathanayan.eip@gmail.com, 239-331-0544.",
   "architectural_notes": [
     "Single-page website with homepage focus",
     "Professional presentation for insurance broker services",
-    "Display broker credentials and company affiliations"
+    "Display broker credentials and company affiliations",
+    "Contact form for lead generation",
+    "Licensed in all 50 states",
+    "Brokerage: Equity Insurance Partners",
+    "Fidelity and Guaranteed Life (not FNG abbreviation)",
+    "Display carrier logos professionally instead of placeholder boxes",
+    "Carriers section should show featured logos plus indicator of 25+ additional carriers",
+    "Contact form must include age field and comments/additional information text area for health/medication details"
   ],
-  "known_issues": [],
-  "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Professional hero background image showing Miami skyline or financial security theme (hero-background.dim_1920x600.png)\n- Simple icon representing life insurance protection (life-insurance-icon.dim_64x64.png)\n- Simple icon representing annuities and retirement planning (annuities-icon.dim_64x64.png)",
+  "known_issues": [
+    "Contact form missing from current implementation",
+    "Ethos logo needs replacement/update",
+    "Forrester insurance company logo not yet added",
+    "Contact section header text not visible due to background color contrast issue",
+    "Insurance company logos are being cut off/cropped in the carriers section"
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-a-professional-homepage-that-introduces-jonathan-ayan-as-a-life-and-annuity-insurance-broker-based-in-miami-florida",
@@ -50,6 +62,190 @@
         "REQ-5"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-companies-section-text-from-a-rated-or-a-minus-rated-to-a-rated-to-accurately-reflect-the-insurance-carriers-ratings",
+      "title": "Update the companies section text from 'A-rated' or 'A minus rated' to 'A+ rated' to accurately reflect the insurance carriers' ratings",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-period-between-first-and-last-name-in-the-email-address-changing-from-jonathan-ayan-eip-gmail-com-to-jonathanayan-eip-gmail-com-in-all-locations-where-the-email-is-displayed",
+      "title": "Remove the period between first and last name in the email address, changing from 'jonathan.ayan.eip@gmail.com' to 'jonathanayan.eip@gmail.com' in all locations where the email is displayed",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-business-hours-limitation-9-6-from-the-contact-section-and-update-text-to-indicate-jonathan-ayan-is-available-anytime-with-no-specific-hours",
+      "title": "Remove business hours limitation (9-6) from the contact section and update text to indicate Jonathan Ayan is available anytime with no specific hours",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-blue-box-display-in-the-companies-section-with-professional-company-logos-for-mutual-of-omaha-transamerica-ethos-and-fidelity-and-guaranteed-life",
+      "title": "Replace the blue box display in the companies section with professional company logos for Mutual of Omaha, Transamerica, Ethos, and Fidelity and Guaranteed Life",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-correct-the-carrier-name-from-fng-to-fidelity-and-guaranteed-life-throughout-the-companies-section",
+      "title": "Correct the carrier name from 'FNG' to 'Fidelity and Guaranteed Life' throughout the companies section",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-contact-form-in-the-contactsection-component-with-fields-for-first-name-last-name-state-dropdown-product-interest-dropdown-with-options-for-life-insurance-and-annuities-and-coverage-amount-text-input",
+      "title": "Create a contact form in the ContactSection component with fields for first name, last name, state (dropdown), product interest (dropdown with options for Life Insurance and Annuities), and coverage amount (text input)",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-ethos-logo-with-an-updated-ethos-insurance-company-logo-in-the-companiessection-component",
+      "title": "Replace the current Ethos logo with an updated Ethos insurance company logo in the CompaniesSection component",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-forrester-insurance-company-logo-to-the-companiessection-component-alongside-the-existing-carrier-logos-mutual-of-omaha-transamerica-ethos-fidelity-and-guaranteed-life",
+      "title": "Add Forrester insurance company logo to the CompaniesSection component alongside the existing carrier logos (Mutual of Omaha, Transamerica, Ethos, Fidelity and Guaranteed Life)",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-visual-indicator-in-the-companiessection-showing-25-other-carriers-to-represent-additional-insurance-companies-beyond-the-primary-logos-displayed",
+      "title": "Add a visual indicator in the CompaniesSection showing '+ 25 other carriers' to represent additional insurance companies beyond the primary logos displayed",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-age-input-field-to-the-contact-form-in-the-contactsection-component-positioned-after-the-coverage-amount-field-and-before-the-submit-button",
+      "title": "Add an age input field to the contact form in the ContactSection component, positioned after the coverage amount field and before the submit button",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-comments-textarea-field-to-the-contact-form-in-the-contactsection-component-for-users-to-provide-additional-information-about-their-health-or-medications-positioned-after-the-age-field-and-before-the-submit-button",
+      "title": "Add a comments textarea field to the contact form in the ContactSection component for users to provide additional information about their health or medications, positioned after the age field and before the submit button",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-text-visibility-issue-in-the-herosection-component-where-the-contact-me-call-to-action-text-is-not-readable-against-the-background-by-changing-the-background-color-or-adjusting-contrast-to-ensure-clear-legibility",
+      "title": "Fix the text visibility issue in the HeroSection component where the 'Contact Me' call-to-action text is not readable against the background, by changing the background color or adjusting contrast to ensure clear legibility",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-gender-selection-field-to-the-contact-form-in-the-contactsection-component-positioned-at-the-bottom-of-the-form-after-the-comments-textarea-field-and-before-the-submit-button-with-options-for-male-and-female",
+      "title": "Add a gender selection field to the contact form in the ContactSection component, positioned at the bottom of the form after the comments textarea field and before the submit button, with options for 'Male' and 'Female'",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-overall-website-visual-design-to-appear-more-professional-by-introducing-additional-colors-beyond-the-current-navy-blue-and-gold-palette-adding-visual-variety-through-color-accents-improved-typography-contrast-section-backgrounds-with-subtle-gradients-or-patterns-and-enhanced-spacing",
+      "title": "Enhance the overall website visual design to appear more professional by introducing additional colors beyond the current navy blue and gold palette, adding visual variety through color accents, improved typography contrast, section backgrounds with subtle gradients or patterns, and enhanced spacing",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-the-professional-business-photo-of-jonathan-ayan-img-4311-jpeg-into-the-website-in-the-most-effective-location-optimizing-for-trust-building-and-professional-presentation",
+      "title": "Integrate the professional business photo of Jonathan Ayan (IMG_4311.jpeg) into the website in the most effective location, optimizing for trust-building and professional presentation",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-decorative-images-and-visual-elements-throughout-the-website-to-enhance-professional-appearance-including-background-patterns-section-dividers-icons-or-illustrative-elements-that-complement-the-insurance-and-financial-services-theme",
+      "title": "Add decorative images and visual elements throughout the website to enhance professional appearance, including background patterns, section dividers, icons, or illustrative elements that complement the insurance and financial services theme",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-trigger-a-full-redeployment-of-the-website-to-the-internet-computer-network-to-resolve-the-canister-id-not-resolved-error",
+      "title": "Trigger a full redeployment of the website to the Internet Computer network to resolve the 'Canister ID Not Resolved' error",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-adjust-the-css-styling-in-the-companiessection-component-to-ensure-all-insurance-company-logos-mutual-of-omaha-transamerica-ethos-fidelity-and-guaranteed-life-and-forrester-are-displayed-in-their-entirety-without-any-cropping-or-cutoff-maintaining-proper-aspect-ratios-and-ensuring-all-logo-elements-are-fully-visible",
+      "title": "Adjust the CSS styling in the CompaniesSection component to ensure all insurance company logos (Mutual of Omaha, Transamerica, Ethos, Fidelity and Guaranteed Life, and Forrester) are displayed in their entirety without any cropping or cutoff, maintaining proper aspect ratios and ensuring all logo elements are fully visible",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-modify-the-companiessection-component-styling-to-eliminate-logo-cropping-by-adjusting-container-heights-padding-and-object-fit-properties-to-ensure-all-insurance-company-logos-mutual-of-omaha-transamerica-ethos-fidelity-and-guaranteed-life-and-forrester-display-completely-with-proper-aspect-ratios-and-no-visual-cutoff",
+      "title": "Modify the CompaniesSection component styling to eliminate logo cropping by adjusting container heights, padding, and object-fit properties to ensure all insurance company logos (Mutual of Omaha, Transamerica, Ethos, Fidelity and Guaranteed Life, and Forrester) display completely with proper aspect ratios and no visual cutoff",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-all-five-insurance-company-logos-in-the-companiessection-component-with-alternative-logo-versions-that-display-properly-without-cropping-sourcing-different-logo-files-for-mutual-of-omaha-transamerica-ethos-fidelity-and-guaranteed-life-and-forrester-that-have-better-aspect-ratios-or-simpler-designs",
+      "title": "Replace all five insurance company logos in the CompaniesSection component with alternative logo versions that display properly without cropping, sourcing different logo files for Mutual of Omaha, Transamerica, Ethos, Fidelity and Guaranteed Life, and Forrester that have better aspect ratios or simpler designs",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-section-component-positioned-at-the-top-of-the-website-after-herosection-before-servicessection-that-explains-the-benefits-of-opening-a-life-insurance-policy-for-children-either-at-birth-or-at-any-age-emphasizing-that-it-builds-tax-free-wealth-that-can-be-used-later-in-life-at-any-point-and-explaining-how-it-grows-with-compounded-interest-and-market-protection",
+      "title": "Create a new section component positioned at the top of the website (after HeroSection, before ServicesSection) that explains the benefits of opening a life insurance policy for children either at birth or at any age, emphasizing that it builds tax-free wealth that can be used later in life at any point and explaining how it grows with compounded interest and market protection",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-app-tsx-reorder-the-component-rendering-so-that-childbenefitssection-appears-after-servicessection-instead-of-before-it-maintaining-all-decorative-dividers-between-sections",
+      "title": "In frontend/src/App.tsx, reorder the component rendering so that ChildBenefitsSection appears after ServicesSection instead of before it, maintaining all decorative dividers between sections",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-companiessection-component-frontend-src-components-companiessection-tsx-modify-the-logo-display-implementation-to-ensure-all-five-insurance-company-logos-mutual-of-omaha-transamerica-ethos-fidelity-and-guaranteed-life-and-forrester-are-shown-in-their-entirety-without-any-cropping-or-cutoff-by-adjusting-container-dimensions-object-fit-properties-padding-and-aspect-ratio-constraints-so-that-each-logo-s-full-visual-content-is-visible",
+      "title": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), modify the logo display implementation to ensure all five insurance company logos (Mutual of Omaha, Transamerica, Ethos, Fidelity and Guaranteed Life, and Forrester) are shown in their entirety without any cropping or cutoff, by adjusting container dimensions, object-fit properties, padding, and aspect ratio constraints so that each logo's full visual content is visible",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -68,6 +264,120 @@
     {
       "id": "AR-3",
       "summary": "Show contact information and Miami, Florida location",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add contact form with fields for first name, last name, state, product interest, and coverage amount",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Update licensing information to show licensed in all 50 states (not just Miami)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add Equity Insurance Partners as the brokerage name",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Display contact information: email jonathanayan.eip@gmail.com and phone 239-331-0544",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Remove business hours (9-6) and indicate availability anytime",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Replace carrier blue boxes with professional company logos for Mutual of Omaha, Transamerica, Ethos, and Fidelity and Guaranteed Life",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Correct FNG to full name: Fidelity and Guaranteed Life",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Add contact form with fields for all client information (first name, last name, state, product interest, coverage amount)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Change/update the Ethos logo in the carriers section",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Add Forrester insurance company logo to the carriers section",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Add a '+ 25 other carriers' indicator/section to show additional insurance companies represented",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Add age field to contact form",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Add comments/additional information text area to contact form for health or medication details",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Fix contact section header text visibility by changing background color/contrast",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Add gender field (male/female) to contact form at the bottom",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Enhance website visual design with more colors and professional appearance",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Add business photo of Jonathan Ayan to the website in optimal location",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Fix insurance company logos display to show full logos without cutoff",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Add section at top of website explaining benefits of opening life insurance for children (tax-free wealth building, compounded interest with market protection)",
       "reqIds": [],
       "status": "pending"
     }
