@@ -1,11 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Fix the insurance company logos in the CompaniesSection to display completely without cropping.
+**Goal:** Replace contact form time and day dropdowns with more specific hour selector and day-of-month input fields.
 
 **Planned changes:**
-- Adjust the logo container dimensions and styling in CompaniesSection.tsx to prevent cropping
-- Modify object-fit properties and padding to ensure full logo visibility
-- Update aspect ratio constraints to maintain proper logo proportions for all five carriers
+- Replace the bestTimeToContact dropdown with an hour selector displaying all 24 hours in 12-hour or 24-hour format
+- Replace the bestDayToContact dropdown with a day-of-month input allowing values 1-31
+- Update the form submission hook to send the new hour and day formats to the backend
+- Update the admin panel submissions table to display the specific hour and day-of-month values in readable format
 
-**User-visible outcome:** All five insurance company logos (Mutual of Omaha, Transamerica, Ethos, Fidelity and Guaranteed Life, and Forrester) will be fully visible without any portions being cut off, while maintaining their correct aspect ratios.
+**User-visible outcome:** Clients can select a specific hour of the day and enter a specific day of the month in the contact form. Admins see the precise time and day preferences in the submissions table.

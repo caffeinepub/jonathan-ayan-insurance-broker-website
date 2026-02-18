@@ -1,37 +1,87 @@
 {
   "kind": "build_request",
-  "title": "Fix insurance company logo display to show complete logos without cropping",
-  "priority": "high",
+  "title": "Replace time/day dropdowns with hour selector and day-of-month input in contact form",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-28",
-      "text": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), modify the logo display implementation to ensure all five insurance company logos (Mutual of Omaha, Transamerica, Ethos, Fidelity and Guaranteed Life, and Forrester) are shown in their entirety without any cropping or cutoff, by adjusting container dimensions, object-fit properties, padding, and aspect ratio constraints so that each logo's full visual content is visible",
+      "id": "REQ-58",
+      "text": "In the ContactSection component (frontend/src/components/ContactSection.tsx), replace the bestTimeToContact dropdown field with an hour selector that allows clients to choose a specific hour throughout the day in 12-hour format (1:00 AM, 2:00 AM, ..., 11:00 AM, 12:00 PM, 1:00 PM, ..., 11:00 PM, 12:00 AM) or 24-hour format (00:00 through 23:00)",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-final"
+          "msg-user-time-day-request"
         ],
         "quotes": [
-          "yes looks good now i need you to fix the Insurance company logos. It is still cut off and I cannot see the whole thing."
+          "At the form at the bottom of the website where the best time to contact give the client the option of selecting a specific time throughout the day a specific hour"
         ]
       },
       "acceptanceCriteria": [
-        "All five carrier logos display completely without any portions being cut off",
-        "Logo aspect ratios are maintained properly",
-        "No visual cropping occurs on any logo element",
-        "The '+25 other carriers' card remains properly styled and positioned"
+        "The bestTimeToContact field displays as a dropdown or select input with hourly time options",
+        "All 24 hours of the day are available as selection options",
+        "The selected hour value is captured in the form state",
+        "The field is positioned where the current bestTimeToContact dropdown exists in the form"
+      ]
+    },
+    {
+      "id": "REQ-59",
+      "text": "In the ContactSection component (frontend/src/components/ContactSection.tsx), replace the bestDayToContact dropdown field with a day-of-month input that allows clients to enter or select a specific day of the month (1-31)",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-time-day-request"
+        ],
+        "quotes": [
+          "where the best day to contact give an option to where the client can actually fill in a specific day out of the month"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The bestDayToContact field displays as either a number input or dropdown with values 1-31",
+        "The selected day value is captured in the form state",
+        "The field is positioned where the current bestDayToContact dropdown exists in the form",
+        "Input validation ensures only valid day numbers (1-31) can be entered"
+      ]
+    },
+    {
+      "id": "REQ-60",
+      "text": "Update the useSubmitContactForm mutation hook in frontend/src/hooks/useQueries.ts to submit the new bestTimeToContact value (specific hour format) and bestDayToContact value (day of month number) to the backend",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-time-day-request"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The mutation correctly maps the hour selector value to bestTimeToContact field",
+        "The mutation correctly maps the day-of-month value to bestDayToContact field",
+        "Form submission successfully saves the new time and day format to the backend"
+      ]
+    },
+    {
+      "id": "REQ-61",
+      "text": "Update the admin panel submissions table in frontend/src/pages/AdminPanel.tsx to display the bestTimeToContact column showing the specific hour format and the bestDayToContact column showing the day of month number in a readable format",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-time-day-request"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The bestTimeToContact column displays the hour in a human-readable format (e.g., '2:00 PM' or '14:00')",
+        "The bestDayToContact column displays the day number (e.g., '15' or 'Day 15')",
+        "Both columns are visible in the submissions table",
+        "The data displays correctly for all existing and new submissions"
       ]
     }
   ],
   "constraints": [
-    "Do not replace the actual logo image files",
-    "Maintain the existing layout structure of the CompaniesSection",
-    "Keep the '+25 other carriers' indicator in place"
+    "Do not modify the backend ContactFormSubmission type structure - it already uses Text fields that can accommodate these new formats",
+    "Preserve all other contact form fields and their current functionality",
+    "Maintain the existing form validation and submission flow"
   ],
   "nonGoals": [
-    "Sourcing new logo files",
-    "Changing the number of logos displayed",
-    "Modifying other sections of the website"
+    "Changing the backend data model or migration logic",
+    "Modifying any other sections of the website beyond the contact form and admin panel",
+    "Adding date picker libraries or complex calendar widgets"
   ],
   "imageRequirements": {
     "required": [],

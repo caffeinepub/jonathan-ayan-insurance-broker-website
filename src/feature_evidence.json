@@ -2,20 +2,78 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-in-the-companiessection-component-frontend-src-components-companiessection-tsx-modify-the-logo-display-implementation-to-ensure-all-five-insurance-company-logos-mutual-of-omaha-transamerica-ethos-fidelity-and-guaranteed-life-and-forrester-are-shown-in-their-entirety-without-any-cropping-or-cutoff-by-adjusting-container-dimensions-object-fit-properties-padding-and-aspect-ratio-constraints-so-that-each-logo-s-full-visual-content-is-visible",
-      "featureTitle": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), modify the logo display implementation to ensure all five insurance company logos (Mutual of Omaha, Transamerica, Ethos, Fidelity and Guaranteed Life, and Forrester) are shown in their entirety without any cropping or cutoff, by adjusting container dimensions, object-fit properties, padding, and aspect ratio constraints so that each logo's full visual content is visible",
+      "featureId": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-replace-the-besttimetocontact-dropdown-field-with-an-hour-selector-that-allows-clients-to-choose-a-specific-hour-throughout-the-day-in-12-hour-format-1-00-am-2-00-am-11-00-am-12-00-pm-1-00-pm-11-00-pm-12-00-am-or-24-hour-format-00-00-through-23-00",
+      "featureTitle": "In the ContactSection component (frontend/src/components/ContactSection.tsx), replace the bestTimeToContact dropdown field with an hour selector that allows clients to choose a specific hour throughout the day in 12-hour format (1:00 AM, 2:00 AM, ..., 11:00 AM, 12:00 PM, 1:00 PM, ..., 11:00 PM, 12:00 AM) or 24-hour format (00:00 through 23:00)",
       "files": [
-        "frontend/src/components/CompaniesSection.tsx"
+        "frontend/src/components/ContactSection.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-28"
+        "REQ-58"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-replace-the-bestdaytocontact-dropdown-field-with-a-day-of-month-input-that-allows-clients-to-enter-or-select-a-specific-day-of-the-month-1-31",
+      "featureTitle": "In the ContactSection component (frontend/src/components/ContactSection.tsx), replace the bestDayToContact dropdown field with a day-of-month input that allows clients to enter or select a specific day of the month (1-31)",
+      "files": [
+        "frontend/src/components/ContactSection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-59"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-usesubmitcontactform-mutation-hook-in-frontend-src-hooks-usequeries-ts-to-submit-the-new-besttimetocontact-value-specific-hour-format-and-bestdaytocontact-value-day-of-month-number-to-the-backend",
+      "featureTitle": "Update the useSubmitContactForm mutation hook in frontend/src/hooks/useQueries.ts to submit the new bestTimeToContact value (specific hour format) and bestDayToContact value (day of month number) to the backend",
+      "files": [
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-60"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-admin-panel-submissions-table-in-frontend-src-pages-adminpanel-tsx-to-display-the-besttimetocontact-column-showing-the-specific-hour-format-and-the-bestdaytocontact-column-showing-the-day-of-month-number-in-a-readable-format",
+      "featureTitle": "Update the admin panel submissions table in frontend/src/pages/AdminPanel.tsx to display the bestTimeToContact column showing the specific hour format and the bestDayToContact column showing the day of month number in a readable format",
+      "files": [
+        "frontend/src/pages/AdminPanel.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-61"
       ],
       "confidence": "high"
     }

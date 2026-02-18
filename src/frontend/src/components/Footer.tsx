@@ -1,4 +1,5 @@
 import { Heart } from 'lucide-react';
+import { Link } from '@tanstack/react-router';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -49,7 +50,7 @@ export default function Footer() {
           <p className="text-white/70 text-sm mb-2">
             © {currentYear} Equity Insurance Partners. All rights reserved.
           </p>
-          <p className="text-white/60 text-sm flex items-center justify-center gap-2">
+          <p className="text-white/60 text-sm flex items-center justify-center gap-2 mb-3">
             Built with <Heart className="w-4 h-4 text-gold fill-gold" /> using{' '}
             <a
               href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(appIdentifier)}`}
@@ -60,6 +61,12 @@ export default function Footer() {
               caffeine.ai
             </a>
           </p>
+          <Link 
+            to="/admin" 
+            className="text-white/40 hover:text-white/60 transition-colors text-xs"
+          >
+            Admin
+          </Link>
         </div>
       </div>
     </footer>

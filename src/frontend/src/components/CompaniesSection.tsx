@@ -4,23 +4,23 @@ export default function CompaniesSection() {
   const carriers = [
     {
       name: 'Mutual of Omaha',
-      logo: '/assets/generated/mutual-of-omaha-logo.dim_200x100.png',
+      logo: '/assets/generated/mutual-of-omaha-logo.dim_400x200.png',
     },
     {
       name: 'Transamerica',
-      logo: '/assets/generated/transamerica-logo.dim_200x100.png',
+      logo: '/assets/generated/transamerica-logo.dim_400x200.png',
     },
     {
       name: 'Ethos',
-      logo: '/assets/generated/ethos-logo.dim_200x80.png',
+      logo: '/assets/generated/ethos-logo.dim_400x200.png',
     },
     {
       name: 'Fidelity and Guaranteed Life',
-      logo: '/assets/generated/fidelity-guaranteed-life-logo.dim_200x100.png',
+      logo: '/assets/generated/fidelity-guaranteed-logo.dim_400x200.png',
     },
     {
-      name: 'Forrester',
-      logo: '/assets/generated/forrester-logo.dim_200x80.png',
+      name: 'Foresters',
+      logo: '/assets/generated/forrester-logo-alt.dim_400x200.png',
     },
   ];
 
@@ -44,18 +44,19 @@ export default function CompaniesSection() {
               key={carrier.name}
               className="border-2 border-border hover:border-accent-blue transition-all duration-300 hover:shadow-lg rounded-xl bg-white/90 backdrop-blur-sm"
             >
-              <CardContent className="p-6 flex items-center justify-center h-[200px]">
+              <CardContent className="p-8 flex items-center justify-center min-h-[200px]">
                 <img
                   src={carrier.logo}
                   alt={carrier.name}
-                  className="max-w-full max-h-full w-auto h-auto object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                  className="w-full h-auto object-contain transition-all duration-300"
+                  style={{ maxHeight: '120px' }}
                 />
               </CardContent>
             </Card>
           ))}
 
           <Card className="border-2 border-dashed border-gold hover:border-gold-dark transition-all duration-300 hover:shadow-lg rounded-xl bg-gradient-to-br from-gold/5 to-gold/10">
-            <CardContent className="p-6 flex items-center justify-center h-[200px]">
+            <CardContent className="p-6 flex items-center justify-center min-h-[200px]">
               <div className="text-center">
                 <p className="text-3xl font-bold text-gold mb-1">+25</p>
                 <p className="text-sm font-semibold text-navy">Other Carriers</p>

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 27,
+  "projectStateVersion": 43,
   "summary": "Professional website for Jonathan Ayan, a life and annuity insurance broker working for Equity Insurance Partners. Licensed to serve clients in all 50 states. Homepage showcasing broker information, services offered, and A+ rated insurance companies represented (Mutual of Omaha, FNG, Transamerica, Ethos, Forrester, and others). Contact: jonathanayan.eip@gmail.com, 239-331-0544.",
   "architectural_notes": [
     "Single-page website with homepage focus",
@@ -15,13 +15,9 @@
     "Contact form must include age field and comments/additional information text area for health/medication details"
   ],
   "known_issues": [
-    "Contact form missing from current implementation",
-    "Ethos logo needs replacement/update",
-    "Forrester insurance company logo not yet added",
-    "Contact section header text not visible due to background color contrast issue",
-    "Insurance company logos are being cut off/cropped in the carriers section"
+    "Admin panel authentication shows 'access denied' when users attempt to log in with Internet Identity"
   ],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-create-a-professional-homepage-that-introduces-jonathan-ayan-as-a-life-and-annuity-insurance-broker-based-in-miami-florida",
@@ -246,6 +242,207 @@
         "REQ-28"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-in-the-companiessection-component-frontend-src-components-companiessection-tsx-fix-the-logo-display-so-that-all-five-insurance-company-logos-mutual-of-omaha-transamerica-ethos-fidelity-and-guaranteed-life-and-forrester-are-visible-on-the-page-not-just-transamerica",
+      "title": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), fix the logo display so that all five insurance company logos (Mutual of Omaha, Transamerica, Ethos, Fidelity and Guaranteed Life, and Forrester) are visible on the page, not just Transamerica",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-companiessection-component-frontend-src-components-companiessection-tsx-ensure-all-insurance-company-logos-display-in-full-color-rather-than-grayscale-or-monochrome-removing-any-css-filters-or-opacity-effects-that-may-be-desaturating-the-logos",
+      "title": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), ensure all insurance company logos display in full color rather than grayscale or monochrome, removing any CSS filters or opacity effects that may be desaturating the logos",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-companiessection-component-frontend-src-components-companiessection-tsx-fix-the-mutual-of-omaha-logo-display-to-show-the-complete-logo-without-any-cropping-or-cutoff-by-adjusting-the-container-dimensions-object-fit-properties-padding-and-aspect-ratio-constraints",
+      "title": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), fix the Mutual of Omaha logo display to show the complete logo without any cropping or cutoff by adjusting the container dimensions, object-fit properties, padding, and aspect ratio constraints",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-companiessection-component-frontend-src-components-companiessection-tsx-fix-the-ethos-logo-display-to-show-the-complete-logo-without-any-cropping-or-cutoff-by-adjusting-the-container-dimensions-object-fit-properties-padding-and-aspect-ratio-constraints",
+      "title": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), fix the Ethos logo display to show the complete logo without any cropping or cutoff by adjusting the container dimensions, object-fit properties, padding, and aspect ratio constraints",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-companiessection-component-frontend-src-components-companiessection-tsx-fix-the-fidelity-and-guaranteed-life-logo-display-to-show-the-complete-logo-without-any-cropping-or-cutoff-by-adjusting-the-container-dimensions-object-fit-properties-padding-and-aspect-ratio-constraints",
+      "title": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), fix the Fidelity and Guaranteed Life logo display to show the complete logo without any cropping or cutoff by adjusting the container dimensions, object-fit properties, padding, and aspect ratio constraints",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-companiessection-component-frontend-src-components-companiessection-tsx-make-the-foresters-logo-visible-and-display-properly-by-ensuring-the-logo-image-source-is-correctly-referenced-and-the-container-styling-allows-it-to-render-without-being-hidden",
+      "title": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), make the Foresters logo visible and display properly by ensuring the logo image source is correctly referenced and the container styling allows it to render without being hidden",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-companiessection-component-frontend-src-components-companiessection-tsx-replace-the-mutual-of-omaha-logo-with-a-different-logo-version-that-displays-properly-without-cropping",
+      "title": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), replace the Mutual of Omaha logo with a different logo version that displays properly without cropping",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-companiessection-component-frontend-src-components-companiessection-tsx-replace-the-transamerica-logo-with-a-different-logo-version-that-displays-properly-without-cropping",
+      "title": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), replace the Transamerica logo with a different logo version that displays properly without cropping",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-companiessection-component-frontend-src-components-companiessection-tsx-replace-the-ethos-logo-with-a-different-logo-version-that-displays-properly-without-cropping",
+      "title": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), replace the Ethos logo with a different logo version that displays properly without cropping",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-companiessection-component-frontend-src-components-companiessection-tsx-replace-the-fidelity-and-guaranteed-life-logo-with-a-different-logo-version-that-displays-properly-without-cropping",
+      "title": "In the CompaniesSection component (frontend/src/components/CompaniesSection.tsx), replace the Fidelity and Guaranteed Life logo with a different logo version that displays properly without cropping",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-contactsection-component-to-call-the-backend-save-method-when-the-form-is-submitted-replacing-the-current-local-storage-implementation",
+      "title": "Update the ContactSection component to call the backend save method when the form is submitted, replacing the current local storage implementation",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-admin-panel-page-component-where-jonathan-can-view-all-contact-form-submissions-in-a-table-format-with-all-submission-details",
+      "title": "Create an admin panel page component where Jonathan can view all contact form submissions in a table format with all submission details",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-internet-identity-authentication-protection-for-the-admin-panel-so-only-authenticated-users-can-view-the-submissions",
+      "title": "Implement Internet Identity authentication protection for the admin panel so only authenticated users can view the submissions",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-navigation-to-access-the-admin-panel-from-the-main-website-positioned-discreetly-e-g-footer-link-or-hidden-route",
+      "title": "Add navigation to access the admin panel from the main website, positioned discreetly (e.g., footer link or hidden route)",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-usequeries-ts-hook-to-include-a-query-method-for-fetching-all-contact-form-submissions-from-the-backend",
+      "title": "Update the useQueries.ts hook to include a query method for fetching all contact form submissions from the backend",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-the-adminpanel-tsx-component-correctly-handles-the-authentication-flow-and-admin-role-check-without-triggering-access-denied-errors",
+      "title": "Verify that the AdminPanel.tsx component correctly handles the authentication flow and admin role check without triggering access denied errors",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-best-time-and-day-fields-to-the-contact-form-in-the-contactsection-component-positioned-at-the-bottom-of-the-form-after-the-gender-field-and-before-the-submit-button-include-a-time-dropdown-morning-afternoon-evening-and-a-day-dropdown-monday-through-sunday-or-any-day",
+      "title": "Add best time and day fields to the contact form in the ContactSection component, positioned at the bottom of the form after the gender field and before the submit button. Include a time dropdown (Morning, Afternoon, Evening) and a day dropdown (Monday through Sunday, or Any Day).",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-usesubmitcontactform-mutation-hook-in-frontend-src-hooks-usequeries-ts-to-include-besttimetocontact-and-bestdaytocontact-fields-when-submitting-the-contact-form",
+      "title": "Update the useSubmitContactForm mutation hook in frontend/src/hooks/useQueries.ts to include bestTimeToContact and bestDayToContact fields when submitting the contact form.",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-admin-panel-submissions-table-in-frontend-src-pages-adminpanel-tsx-to-display-the-besttimetocontact-and-bestdaytocontact-columns-for-each-submission",
+      "title": "Update the admin panel submissions table in frontend/src/pages/AdminPanel.tsx to display the bestTimeToContact and bestDayToContact columns for each submission.",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-replace-the-besttimetocontact-dropdown-field-with-an-hour-selector-that-allows-clients-to-choose-a-specific-hour-throughout-the-day-e-g-1-00-am-through-12-00-pm-and-1-00-pm-through-11-00-pm-or-00-00-through-23-00-in-24-hour-format",
+      "title": "In the ContactSection component (frontend/src/components/ContactSection.tsx), replace the bestTimeToContact dropdown field with an hour selector that allows clients to choose a specific hour throughout the day (e.g., 1:00 AM through 12:00 PM and 1:00 PM through 11:00 PM, or 00:00 through 23:00 in 24-hour format)",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-replace-the-bestdaytocontact-dropdown-field-with-a-day-of-month-input-that-allows-clients-to-enter-or-select-a-specific-day-of-the-month-1-31",
+      "title": "In the ContactSection component (frontend/src/components/ContactSection.tsx), replace the bestDayToContact dropdown field with a day-of-month input that allows clients to enter or select a specific day of the month (1-31)",
+      "reqIds": [
+        "REQ-55",
+        "REQ-59"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-update-the-admin-panel-submissions-table-in-frontend-src-pages-adminpanel-tsx-to-display-the-new-besttimetocontact-specific-hour-and-bestdaytocontact-day-of-month-values-in-a-readable-format",
+      "title": "Update the admin panel submissions table in frontend/src/pages/AdminPanel.tsx to display the new bestTimeToContact (specific hour) and bestDayToContact (day of month) values in a readable format",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-replace-the-besttimetocontact-dropdown-field-with-an-hour-selector-that-allows-clients-to-choose-a-specific-hour-throughout-the-day-in-12-hour-format-1-00-am-2-00-am-11-00-am-12-00-pm-1-00-pm-11-00-pm-12-00-am-or-24-hour-format-00-00-through-23-00",
+      "title": "In the ContactSection component (frontend/src/components/ContactSection.tsx), replace the bestTimeToContact dropdown field with an hour selector that allows clients to choose a specific hour throughout the day in 12-hour format (1:00 AM, 2:00 AM, ..., 11:00 AM, 12:00 PM, 1:00 PM, ..., 11:00 PM, 12:00 AM) or 24-hour format (00:00 through 23:00)",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-usesubmitcontactform-mutation-hook-in-frontend-src-hooks-usequeries-ts-to-submit-the-new-besttimetocontact-value-specific-hour-format-and-bestdaytocontact-value-day-of-month-number-to-the-backend",
+      "title": "Update the useSubmitContactForm mutation hook in frontend/src/hooks/useQueries.ts to submit the new bestTimeToContact value (specific hour format) and bestDayToContact value (day of month number) to the backend",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-admin-panel-submissions-table-in-frontend-src-pages-adminpanel-tsx-to-display-the-besttimetocontact-column-showing-the-specific-hour-format-and-the-bestdaytocontact-column-showing-the-day-of-month-number-in-a-readable-format",
+      "title": "Update the admin panel submissions table in frontend/src/pages/AdminPanel.tsx to display the bestTimeToContact column showing the specific hour format and the bestDayToContact column showing the day of month number in a readable format",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -379,6 +576,110 @@
       "id": "AR-22",
       "summary": "Add section at top of website explaining benefits of opening life insurance for children (tax-free wealth building, compounded interest with market protection)",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Replace Mutual of Omaha logo with a different/better logo version",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Replace Transamerica logo with a different/better logo version",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Replace Ethos logo with a different/better logo version",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Replace F&G (Fidelity and Guaranteed) logo with a different/better logo version",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Build backend database to store contact form submissions with admin panel for viewing leads",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Create a Motoko backend data model to store contact form submissions with fields for first name, last name, state, product interest (Life Insurance or Annuities), coverage amount, age, gender, and additional comments",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Implement backend methods to save contact form submissions to stable storage and retrieve all submissions",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Update the backend main.mo actor to remove or modify the admin access control check that is causing 'access denied' errors when users attempt to log in to the admin panel at /admin route",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Update the useActor hook in frontend/src/hooks/useActor.ts to ensure the actor is properly initialized with the authenticated identity before admin panel queries execute",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Add best time/day to contact field at bottom of contact form",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Update the backend ContactFormSubmission data model in backend/main.mo to include bestTimeToContact and bestDayToContact fields to store the new form data.",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Fix the admin panel access control in backend/main.mo to explicitly grant admin access to the principal associated with Jonathan Ayan's Internet Identity, allowing him to authenticate and view the admin panel without 'access denied' errors.",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Change best time to contact from dropdown (Morning/Afternoon/Evening) to specific hour selection (time picker or hourly dropdown)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-40",
+      "summary": "Change best day to contact from day-of-week dropdown to specific day of month input (date picker or text field for day number 1-31)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-43",
+      "summary": "Update the backend ContactFormSubmission type in backend/main.mo to accommodate the new bestTimeToContact format (specific hour) and bestDayToContact format (day of month as a number) if the current Text type is insufficient",
+      "reqIds": [
+        "REQ-56"
+      ],
       "status": "pending"
     }
   ],

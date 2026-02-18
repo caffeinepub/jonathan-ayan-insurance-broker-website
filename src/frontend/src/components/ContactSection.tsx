@@ -1,12 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useState } from 'react';
+import { useSubmitContactForm } from '../hooks/useQueries';
 
 const US_STATES = [
   'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
@@ -18,6 +20,17 @@ const US_STATES = [
   'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
 ];
 
+// Generate hour options in 12-hour format
+const HOUR_OPTIONS = [
+  '12:00 AM', '1:00 AM', '2:00 AM', '3:00 AM', '4:00 AM', '5:00 AM',
+  '6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM',
+  '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM',
+  '6:00 PM', '7:00 PM', '8:00 PM', '9:00 PM', '10:00 PM', '11:00 PM'
+];
+
+// Generate day options (1-31)
+const DAY_OPTIONS = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
+
 export default function ContactSection() {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -27,13 +40,52 @@ export default function ContactSection() {
     coverageAmount: '',
     age: '',
     additionalComments: '',
-    gender: ''
+    gender: '',
+    bestTimeToContact: '',
+    bestDayToContact: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [showSuccess, setShowSuccess] = useState(false);
+  const submitForm = useSubmitContactForm();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission logic would go here
-    console.log('Form submitted:', formData);
+    setShowSuccess(false);
+
+    try {
+      await submitForm.mutateAsync({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        state: formData.state,
+        productInterest: formData.productInterest as 'life-insurance' | 'annuities',
+        coverageAmount: formData.coverageAmount,
+        age: formData.age,
+        gender: formData.gender as 'male' | 'female',
+        additionalComments: formData.additionalComments,
+        bestTimeToContact: formData.bestTimeToContact,
+        bestDayToContact: formData.bestDayToContact,
+      });
+
+      // Clear form and show success message
+      setFormData({
+        firstName: '',
+        lastName: '',
+        state: '',
+        productInterest: '',
+        coverageAmount: '',
+        age: '',
+        additionalComments: '',
+        gender: '',
+        bestTimeToContact: '',
+        bestDayToContact: ''
+      });
+      setShowSuccess(true);
+
+      // Hide success message after 5 seconds
+      setTimeout(() => setShowSuccess(false), 5000);
+    } catch (error) {
+      console.error('Form submission error:', error);
+    }
   };
 
   return (
@@ -57,6 +109,26 @@ export default function ContactSection() {
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-8">
+              {showSuccess && (
+                <Alert className="mb-6 bg-green-50 border-green-200">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <AlertTitle className="text-green-800">Success!</AlertTitle>
+                  <AlertDescription className="text-green-700">
+                    Your request has been submitted successfully. I'll get back to you within 24 hours.
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              {submitForm.isError && (
+                <Alert className="mb-6 bg-red-50 border-red-200">
+                  <AlertCircle className="h-4 w-4 text-red-600" />
+                  <AlertTitle className="text-red-800">Error</AlertTitle>
+                  <AlertDescription className="text-red-700">
+                    There was an error submitting your request. Please try again or contact me directly.
+                  </AlertDescription>
+                </Alert>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6 mb-8">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -162,20 +234,6 @@ export default function ContactSection() {
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="additionalComments" className="text-navy font-semibold">
-                    Additional Comments
-                  </Label>
-                  <Textarea
-                    id="additionalComments"
-                    rows={4}
-                    value={formData.additionalComments}
-                    onChange={(e) => setFormData({ ...formData, additionalComments: e.target.value })}
-                    className="rounded-lg border-2 border-border focus:border-accent-blue resize-none"
-                    placeholder="Please share any relevant health conditions, medications, or additional information that would help us provide you with the best coverage options..."
-                  />
-                </div>
-
                 <div className="space-y-3">
                   <Label className="text-navy font-semibold">
                     Gender *
@@ -201,12 +259,73 @@ export default function ContactSection() {
                   </RadioGroup>
                 </div>
 
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="bestTimeToContact" className="text-navy font-semibold">
+                      Best Time to Contact *
+                    </Label>
+                    <Select
+                      value={formData.bestTimeToContact}
+                      onValueChange={(value) => setFormData({ ...formData, bestTimeToContact: value })}
+                      required
+                    >
+                      <SelectTrigger id="bestTimeToContact" className="rounded-lg border-2 border-border focus:border-accent-blue">
+                        <SelectValue placeholder="Select hour" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {HOUR_OPTIONS.map((hour) => (
+                          <SelectItem key={hour} value={hour}>
+                            {hour}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="bestDayToContact" className="text-navy font-semibold">
+                      Best Day to Contact *
+                    </Label>
+                    <Select
+                      value={formData.bestDayToContact}
+                      onValueChange={(value) => setFormData({ ...formData, bestDayToContact: value })}
+                      required
+                    >
+                      <SelectTrigger id="bestDayToContact" className="rounded-lg border-2 border-border focus:border-accent-blue">
+                        <SelectValue placeholder="Select day of month" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {DAY_OPTIONS.map((day) => (
+                          <SelectItem key={day} value={day}>
+                            Day {day}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="additionalComments" className="text-navy font-semibold">
+                    Additional Comments
+                  </Label>
+                  <Textarea
+                    id="additionalComments"
+                    rows={4}
+                    value={formData.additionalComments}
+                    onChange={(e) => setFormData({ ...formData, additionalComments: e.target.value })}
+                    className="rounded-lg border-2 border-border focus:border-accent-blue resize-none"
+                    placeholder="Please share any relevant health conditions, medications, or additional information that would help us provide you with the best coverage options..."
+                  />
+                </div>
+
                 <Button
                   type="submit"
                   size="lg"
+                  disabled={submitForm.isPending}
                   className="w-full bg-gradient-to-r from-gold to-gold-dark hover:from-gold-dark hover:to-gold text-navy font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all"
                 >
-                  Submit Request
+                  {submitForm.isPending ? 'Submitting...' : 'Submit Request'}
                 </Button>
               </form>
 

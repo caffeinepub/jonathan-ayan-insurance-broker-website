@@ -8,10 +8,136 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
-export const idlService = IDL.Service({});
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
+export const Gender = IDL.Variant({
+  'female' : IDL.Null,
+  'male' : IDL.Null,
+  'nonBinary' : IDL.Null,
+});
+export const ProductInterest = IDL.Variant({
+  'lifeInsurance' : IDL.Null,
+  'annuities' : IDL.Null,
+});
+export const ContactFormSubmission = IDL.Record({
+  'age' : IDL.Nat,
+  'bestDayToContact' : IDL.Text,
+  'additionalComments' : IDL.Text,
+  'bestTimeToContact' : IDL.Text,
+  'state' : IDL.Text,
+  'gender' : Gender,
+  'productInterest' : ProductInterest,
+  'coverageAmount' : IDL.Nat,
+  'lastName' : IDL.Text,
+  'firstName' : IDL.Text,
+});
+export const UserProfile = IDL.Record({ 'name' : IDL.Text });
+
+export const idlService = IDL.Service({
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'getAdminPanel' : IDL.Func([], [IDL.Vec(ContactFormSubmission)], ['query']),
+  'getAllSubmissions' : IDL.Func(
+      [],
+      [IDL.Vec(ContactFormSubmission)],
+      ['query'],
+    ),
+  'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getUserProfile' : IDL.Func(
+      [IDL.Principal],
+      [IDL.Opt(UserProfile)],
+      ['query'],
+    ),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'submitContactForm' : IDL.Func(
+      [
+        IDL.Text,
+        IDL.Text,
+        IDL.Text,
+        ProductInterest,
+        IDL.Nat,
+        IDL.Nat,
+        Gender,
+        IDL.Text,
+        IDL.Text,
+        IDL.Text,
+      ],
+      [],
+      [],
+    ),
+});
 
 export const idlInitArgs = [];
 
-export const idlFactory = ({ IDL }) => { return IDL.Service({}); };
+export const idlFactory = ({ IDL }) => {
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
+  const Gender = IDL.Variant({
+    'female' : IDL.Null,
+    'male' : IDL.Null,
+    'nonBinary' : IDL.Null,
+  });
+  const ProductInterest = IDL.Variant({
+    'lifeInsurance' : IDL.Null,
+    'annuities' : IDL.Null,
+  });
+  const ContactFormSubmission = IDL.Record({
+    'age' : IDL.Nat,
+    'bestDayToContact' : IDL.Text,
+    'additionalComments' : IDL.Text,
+    'bestTimeToContact' : IDL.Text,
+    'state' : IDL.Text,
+    'gender' : Gender,
+    'productInterest' : ProductInterest,
+    'coverageAmount' : IDL.Nat,
+    'lastName' : IDL.Text,
+    'firstName' : IDL.Text,
+  });
+  const UserProfile = IDL.Record({ 'name' : IDL.Text });
+  
+  return IDL.Service({
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'getAdminPanel' : IDL.Func([], [IDL.Vec(ContactFormSubmission)], ['query']),
+    'getAllSubmissions' : IDL.Func(
+        [],
+        [IDL.Vec(ContactFormSubmission)],
+        ['query'],
+      ),
+    'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getUserProfile' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Opt(UserProfile)],
+        ['query'],
+      ),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'submitContactForm' : IDL.Func(
+        [
+          IDL.Text,
+          IDL.Text,
+          IDL.Text,
+          ProductInterest,
+          IDL.Nat,
+          IDL.Nat,
+          Gender,
+          IDL.Text,
+          IDL.Text,
+          IDL.Text,
+        ],
+        [],
+        [],
+      ),
+  });
+};
 
 export const init = ({ IDL }) => { return []; };
