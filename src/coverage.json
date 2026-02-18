@@ -1,41 +1,34 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-18T21:30:02.487Z",
+  "generatedAt": "2026-02-18T22:05:56.351Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
+    "total": 1,
     "implemented": 0,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Fix the admin authorization system so that the Principal ID '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-s' is properly recognized as an admin and granted access to the admin panel in production",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-2",
-        "summary": "Ensure admin Principal IDs persist correctly across canister upgrades so that authorized admins do not lose access after deployment",
-        "status": "unknown",
-        "plannedFiles": [],
+        "summary": "Update the deployment URL configuration to change from the current draft website URL to a new custom URL or production domain",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/hooks/useInternetIdentity.ts",
+          "frontend/src/hooks/useActor.ts",
+          "frontend/index.html",
+          "frontend/src/components/Footer.tsx"
+        ],
         "matchedFiles": []
       }
     ]
   },
   "changedFiles": [
     "backend/main.mo",
-    "backend/migration.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-implementation-plan.json",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

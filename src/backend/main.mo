@@ -6,19 +6,17 @@ import AccessControl "authorization/access-control";
 import Array "mo:core/Array";
 import Text "mo:core/Text";
 import MixinAuthorization "authorization/MixinAuthorization";
-import Migration "migration";
 
-(with migration = Migration.run)
 actor {
-  // Initialize the access control state
-  let accessControlState = AccessControl.initState();
+  // Initialize the access control state with stable variable
+  stable let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
 
   // TYPES
 
   public type UserProfile = {
     name : Text;
-    // Other user metadata if needed
+    // Other user metadata if needed, e.g., email, phone, etc.
   };
 
   type ProductInterest = {
@@ -45,10 +43,10 @@ actor {
     bestDayToContact : Text;
   };
 
-  // DATA STRUCTURES
+  // DATA STRUCTURES - marked as stable to persist across upgrades
 
-  let userProfiles = Map.empty<Principal, UserProfile>();
-  let submissions = List.empty<ContactFormSubmission>();
+  stable let userProfiles = Map.empty<Principal, UserProfile>();
+  stable let submissions = List.empty<ContactFormSubmission>();
 
   // BACKEND LOGIC
 

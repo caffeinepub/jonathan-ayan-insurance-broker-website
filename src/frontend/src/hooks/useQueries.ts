@@ -1,27 +1,30 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
+import { useInternetIdentity } from './useInternetIdentity';
 import type { UserProfile } from '../backend';
 import { Gender, ProductInterest } from '../backend';
 
 // User Profile Queries
 export function useGetCallerUserProfile() {
   const { actor, isFetching: actorFetching } = useActor();
+  const { loginStatus } = useInternetIdentity();
 
   const query = useQuery<UserProfile | null>({
     queryKey: ['currentUserProfile'],
     queryFn: async () => {
       if (!actor) throw new Error('Actor not available');
+      console.log('[useGetCallerUserProfile] Fetching user profile');
       return actor.getCallerUserProfile();
     },
-    enabled: !!actor && !actorFetching,
+    enabled: !!actor && !actorFetching && loginStatus !== 'initializing',
     retry: false,
   });
 
   // Return custom state that properly reflects actor dependency
   return {
     ...query,
-    isLoading: actorFetching || query.isLoading,
-    isFetched: !!actor && query.isFetched,
+    isLoading: actorFetching || loginStatus === 'initializing' || query.isLoading,
+    isFetched: !!actor && loginStatus !== 'initializing' && query.isFetched,
   };
 }
 
@@ -43,21 +46,34 @@ export function useSaveCallerUserProfile() {
 // Admin Queries
 export function useIsCallerAdmin() {
   const { actor, isFetching: actorFetching } = useActor();
+  const { loginStatus } = useInternetIdentity();
 
   const query = useQuery<boolean>({
     queryKey: ['isAdmin'],
     queryFn: async () => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.isCallerAdmin();
+      if (!actor) {
+        console.error('[useIsCallerAdmin] Actor not available');
+        throw new Error('Actor not available');
+      }
+      console.log('[useIsCallerAdmin] Checking admin status...');
+      try {
+        const isAdmin = await actor.isCallerAdmin();
+        console.log('[useIsCallerAdmin] Admin status result:', isAdmin);
+        return isAdmin;
+      } catch (error) {
+        console.error('[useIsCallerAdmin] Error checking admin status:', error);
+        throw error;
+      }
     },
-    enabled: !!actor && !actorFetching,
-    retry: false,
+    enabled: !!actor && !actorFetching && loginStatus !== 'initializing',
+    retry: 2,
+    retryDelay: 1000,
   });
 
   return {
     ...query,
-    isLoading: actorFetching || query.isLoading,
-    isFetched: !!actor && query.isFetched,
+    isLoading: actorFetching || loginStatus === 'initializing' || query.isLoading,
+    isFetched: !!actor && loginStatus !== 'initializing' && query.isFetched,
   };
 }
 
@@ -175,13 +191,17 @@ export function useSubmitContactForm() {
 
 export function useGetAllSubmissions() {
   const { actor, isFetching: actorFetching } = useActor();
+  const { loginStatus } = useInternetIdentity();
 
   return useQuery({
     queryKey: ['submissions'],
     queryFn: async () => {
       if (!actor) throw new Error('Actor not available');
+      console.log('[useGetAllSubmissions] Fetching submissions');
       return actor.getAllSubmissions();
     },
-    enabled: !!actor && !actorFetching,
+    enabled: !!actor && !actorFetching && loginStatus !== 'initializing',
+    retry: 2,
+    retryDelay: 1000,
   });
 }

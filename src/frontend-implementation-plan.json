@@ -1,6 +1,38 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Frontend Implementation Plan - No Frontend Changes Required",
-  "requirements": []
+  "title": "Update Website URL from Draft Deployment",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Update the deployment URL configuration to change from the current draft website URL to a new custom URL or production domain",
+      "acceptanceCriteria": [
+        "The website is accessible via the new custom URL",
+        "All internal links and references point to the new URL",
+        "The old draft URL redirects to the new URL or is decommissioned"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Update the Internet Identity configuration to use the new custom domain URL. Modify the derivationOrigin and other URL-dependent settings in the InternetIdentityProvider to ensure authentication works correctly with the new production URL. This ensures that Internet Identity authentication continues to function after the URL change."
+        },
+        {
+          "path": "frontend/src/hooks/useActor.ts",
+          "operation": "modify",
+          "description": "Review and update any hardcoded URLs or host references in the actor initialization logic. Ensure the canister host configuration properly resolves to the new custom domain and that the actor creation uses the correct identity delegation with the new URL."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Update meta tags, canonical URLs, and any other URL references in the HTML entry point to reflect the new custom domain. This includes og:url meta tags if present and any hardcoded domain references."
+        },
+        {
+          "path": "frontend/src/components/Footer.tsx",
+          "operation": "modify",
+          "description": "Update any hardcoded URL references in the footer component, including links, contact information, or attribution links that may reference the old draft URL. Ensure all links point to the new custom domain."
+        }
+      ]
+    }
+  ]
 }

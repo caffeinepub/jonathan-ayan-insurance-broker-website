@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { AlertCircle, ShieldAlert, User, Copy, Check } from 'lucide-react';
+import { AlertCircle, ShieldAlert, User, Copy, Check, RefreshCw } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -15,9 +15,9 @@ import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 
 export default function AdminPanel() {
-  const { identity } = useInternetIdentity();
+  const { identity, loginStatus } = useInternetIdentity();
   const { data: userProfile, isLoading: profileLoading, isFetched: profileFetched } = useGetCallerUserProfile();
-  const { data: isAdmin, isLoading: adminCheckLoading, isFetched: adminCheckFetched } = useIsCallerAdmin();
+  const { data: isAdmin, isLoading: adminCheckLoading, isFetched: adminCheckFetched, error: adminCheckError, refetch: refetchAdminStatus } = useIsCallerAdmin();
   const { data: submissions, isLoading: submissionsLoading, error: submissionsError } = useGetAllSubmissions();
   const saveProfile = useSaveCallerUserProfile();
 
@@ -25,6 +25,7 @@ export default function AdminPanel() {
   const [copied, setCopied] = useState(false);
 
   const isAuthenticated = !!identity;
+  const isAuthenticating = loginStatus === 'logging-in' || loginStatus === 'initializing';
   const showProfileSetup = isAuthenticated && !profileLoading && profileFetched && userProfile === null;
 
   const handleSaveProfile = async () => {
@@ -104,14 +105,98 @@ export default function AdminPanel() {
     );
   }
 
-  // Show loading state while checking admin status
-  if (adminCheckLoading || profileLoading) {
+  // Show loading state while checking admin status or authenticating
+  if (adminCheckLoading || profileLoading || isAuthenticating) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-light via-background to-accent-blue/5 p-6">
         <div className="container mx-auto max-w-7xl">
-          <Skeleton className="h-12 w-64 mb-8" />
-          <Skeleton className="h-96 w-full" />
+          <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+            <Skeleton className="h-12 w-64 mb-2" />
+            <Skeleton className="h-6 w-48 mb-8" />
+            <div className="text-center text-muted-foreground">
+              <p className="text-sm">Verifying admin access...</p>
+            </div>
+          </div>
         </div>
+      </div>
+    );
+  }
+
+  // Show error state if admin check failed
+  if (adminCheckError && adminCheckFetched) {
+    const principalId = identity?.getPrincipal().toString() || '';
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-light via-background to-accent-blue/5 flex items-center justify-center p-6">
+        <Card className="max-w-2xl w-full">
+          <CardHeader className="text-center">
+            <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <AlertCircle className="w-8 h-8 text-destructive" />
+            </div>
+            <CardTitle className="text-2xl text-navy">Authorization Error</CardTitle>
+            <CardDescription>
+              There was an error checking your admin status.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-6">
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error Details</AlertTitle>
+              <AlertDescription className="text-sm">
+                {adminCheckError instanceof Error ? adminCheckError.message : 'Unknown error occurred'}
+              </AlertDescription>
+            </Alert>
+
+            <Alert className="bg-accent-blue/5 border-accent-blue">
+              <AlertCircle className="h-4 w-4 text-accent-blue" />
+              <AlertTitle className="text-navy">Your Principal ID</AlertTitle>
+              <AlertDescription className="text-sm text-muted-foreground">
+                If you believe you should have admin access, share this Principal ID with the administrator:
+              </AlertDescription>
+            </Alert>
+            
+            <div className="space-y-2">
+              <div className="relative">
+                <code className="block w-full p-4 bg-slate-light/50 border-2 border-border rounded-lg text-sm font-mono break-all text-navy">
+                  {principalId}
+                </code>
+                <Button
+                  onClick={handleCopyPrincipal}
+                  size="sm"
+                  variant="outline"
+                  className="absolute top-2 right-2 h-8 px-3"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-4 h-4 mr-1" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4 mr-1" />
+                      Copy
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3 pt-2">
+              <Button
+                onClick={() => refetchAdminStatus()}
+                variant="outline"
+                className="w-full"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Retry Admin Check
+              </Button>
+              <LoginButton />
+              <Link to="/" className="text-center text-sm text-muted-foreground hover:text-accent-blue transition-colors">
+                ← Back to homepage
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -171,6 +256,14 @@ export default function AdminPanel() {
             </div>
 
             <div className="flex flex-col gap-3 pt-2">
+              <Button
+                onClick={() => refetchAdminStatus()}
+                variant="outline"
+                className="w-full"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Retry Admin Check
+              </Button>
               <LoginButton />
               <Link to="/" className="text-center text-sm text-muted-foreground hover:text-accent-blue transition-colors">
                 ← Back to homepage
@@ -245,7 +338,7 @@ export default function AdminPanel() {
                 <AlertCircle className="h-4 w-4" />
                 <AlertTitle>Error loading submissions</AlertTitle>
                 <AlertDescription>
-                  There was an error loading the submissions. Please try refreshing the page.
+                  {submissionsError instanceof Error ? submissionsError.message : 'There was an error loading the submissions. Please try refreshing the page.'}
                 </AlertDescription>
               </Alert>
             ) : !submissions || submissions.length === 0 ? (
@@ -275,36 +368,29 @@ export default function AdminPanel() {
                   <TableBody>
                     {submissions.map((submission, index) => (
                       <TableRow key={index} className="hover:bg-accent-blue/5">
-                        <TableCell className="font-medium">
+                        <TableCell className="font-medium text-navy">
                           {submission.firstName} {submission.lastName}
                         </TableCell>
                         <TableCell>{submission.state}</TableCell>
                         <TableCell>
-                          <Badge variant="outline" className="bg-accent-blue/10 text-accent-blue border-accent-blue">
+                          <Badge variant="outline" className="bg-navy/5 text-navy border-navy/20">
                             {formatProductInterest(submission.productInterest)}
                           </Badge>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="font-semibold text-gold-dark">
                           ${Number(submission.coverageAmount).toLocaleString()}
                         </TableCell>
                         <TableCell>{Number(submission.age)}</TableCell>
                         <TableCell>{formatGender(submission.gender)}</TableCell>
-                        <TableCell>{submission.bestTimeToContact || '—'}</TableCell>
-                        <TableCell>
-                          {submission.bestDayToContact ? `Day ${submission.bestDayToContact}` : '—'}
-                        </TableCell>
-                        <TableCell className="max-w-xs">
-                          <div className="truncate" title={submission.additionalComments}>
-                            {submission.additionalComments || '—'}
-                          </div>
+                        <TableCell className="text-sm">{submission.bestTimeToContact}</TableCell>
+                        <TableCell className="text-sm">{submission.bestDayToContact}</TableCell>
+                        <TableCell className="max-w-xs truncate text-sm text-muted-foreground">
+                          {submission.additionalComments || '—'}
                         </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
-                <div className="mt-4 text-sm text-muted-foreground text-center">
-                  Total submissions: {submissions.length}
-                </div>
               </div>
             )}
           </CardContent>

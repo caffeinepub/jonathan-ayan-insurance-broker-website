@@ -1,10 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Fix admin authorization so that the Principal ID '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-s' can access the admin panel in production.
+**Goal:** Update the website deployment URL from the draft domain to a custom production domain.
 
 **Planned changes:**
-- Fix the backend authorization system to properly recognize the specified Principal ID as an admin
-- Ensure admin Principal IDs persist in stable storage across canister upgrades
+- Configure the Internet Computer canister to use a custom domain instead of the draft .icp0.io URL
+- Update any hardcoded URL references in the codebase to use the new domain
+- Ensure Internet Identity authentication works with the new URL
+- Set up appropriate redirects from the old draft URL to the new production URL
 
-**User-visible outcome:** The user with Principal ID '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-s' can successfully access the admin panel without seeing the "Access Denied" error, and this access persists after deployments.
+**User-visible outcome:** The website will be accessible via a professional custom domain URL instead of the draft deployment URL, with all functionality including authentication working seamlessly.
