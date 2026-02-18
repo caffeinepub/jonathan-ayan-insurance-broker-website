@@ -1,12 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Replace contact form time and day dropdowns with more specific hour selector and day-of-month input fields.
+**Goal:** Fix contact form submission error by adding comprehensive error logging and validation throughout the submission flow.
 
 **Planned changes:**
-- Replace the bestTimeToContact dropdown with an hour selector displaying all 24 hours in 12-hour or 24-hour format
-- Replace the bestDayToContact dropdown with a day-of-month input allowing values 1-31
-- Update the form submission hook to send the new hour and day formats to the backend
-- Update the admin panel submissions table to display the specific hour and day-of-month values in readable format
+- Add detailed error logging to ContactSection form submission handler to capture error messages, stack traces, and backend response details
+- Add error handling and logging to useSubmitContactForm mutation hook to identify actor availability, network issues, backend errors, or validation problems
+- Verify and enhance backend saveContactFormSubmission method error handling for field validation and storage failures
+- Ensure all form fields have valid default values and proper validation for bestTimeToContact and bestDayToContact fields before submission
 
-**User-visible outcome:** Clients can select a specific hour of the day and enter a specific day of the month in the contact form. Admins see the precise time and day preferences in the submissions table.
+**User-visible outcome:** Users will be able to successfully submit the contact form, and if errors occur, clear error messages will help diagnose and resolve the issue.

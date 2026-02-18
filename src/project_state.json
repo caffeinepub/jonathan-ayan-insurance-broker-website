@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 43,
+  "projectStateVersion": 49,
   "summary": "Professional website for Jonathan Ayan, a life and annuity insurance broker working for Equity Insurance Partners. Licensed to serve clients in all 50 states. Homepage showcasing broker information, services offered, and A+ rated insurance companies represented (Mutual of Omaha, FNG, Transamerica, Ethos, Forrester, and others). Contact: jonathanayan.eip@gmail.com, 239-331-0544.",
   "architectural_notes": [
     "Single-page website with homepage focus",
@@ -15,9 +15,10 @@
     "Contact form must include age field and comments/additional information text area for health/medication details"
   ],
   "known_issues": [
-    "Admin panel authentication shows 'access denied' when users attempt to log in with Internet Identity"
+    "Admin panel authentication shows 'access denied' when users attempt to log in with Internet Identity",
+    "Contact form submission shows error when attempting to submit"
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-a-professional-homepage-that-introduces-jonathan-ayan-as-a-life-and-annuity-insurance-broker-based-in-miami-florida",
@@ -443,6 +444,54 @@
         "REQ-61"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-convert-the-besttimetocontact-field-from-a-standard-dropdown-to-a-scrollable-select-input-that-displays-multiple-time-options-at-once-e-g-showing-5-7-visible-options-with-scroll-allowing-users-to-scroll-through-all-hour-options-12-00-am-through-11-00-pm-in-12-hour-format",
+      "title": "In the ContactSection component (frontend/src/components/ContactSection.tsx), convert the bestTimeToContact field from a standard dropdown to a scrollable select input that displays multiple time options at once (e.g., showing 5-7 visible options with scroll), allowing users to scroll through all hour options (12:00 AM through 11:00 PM in 12-hour format)",
+      "reqIds": [
+        "REQ-62"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-convert-the-bestdaytocontact-field-from-a-standard-dropdown-to-a-scrollable-select-input-that-displays-multiple-day-of-month-options-at-once-e-g-showing-5-7-visible-options-with-scroll-allowing-users-to-scroll-through-all-day-options-1-31",
+      "title": "In the ContactSection component (frontend/src/components/ContactSection.tsx), convert the bestDayToContact field from a standard dropdown to a scrollable select input that displays multiple day-of-month options at once (e.g., showing 5-7 visible options with scroll), allowing users to scroll through all day options (1-31)",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-adminpanel-tsx-component-frontend-src-pages-adminpanel-tsx-modify-the-access-denied-message-to-display-the-user-s-internet-identity-principal-id-when-authentication-succeeds-but-admin-access-is-denied-making-it-easy-for-users-to-copy-and-share-their-principal-id-for-whitelisting",
+      "title": "In the AdminPanel.tsx component (frontend/src/pages/AdminPanel.tsx), modify the 'Access Denied' message to display the user's Internet Identity Principal ID when authentication succeeds but admin access is denied, making it easy for users to copy and share their Principal ID for whitelisting",
+      "reqIds": [
+        "REQ-64"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-add-comprehensive-error-logging-to-the-form-submission-handler-to-capture-the-exact-error-message-and-details-when-the-submit-operation-fails",
+      "title": "In the ContactSection component (frontend/src/components/ContactSection.tsx), add comprehensive error logging to the form submission handler to capture the exact error message and details when the submit operation fails",
+      "reqIds": [
+        "REQ-65"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-usesubmitcontactform-mutation-hook-frontend-src-hooks-usequeries-ts-add-error-handling-and-logging-to-identify-whether-the-submission-failure-is-due-to-actor-unavailability-network-issues-backend-method-errors-or-data-validation-problems",
+      "title": "In the useSubmitContactForm mutation hook (frontend/src/hooks/useQueries.ts), add error handling and logging to identify whether the submission failure is due to actor unavailability, network issues, backend method errors, or data validation problems",
+      "reqIds": [
+        "REQ-66"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-ensure-all-form-fields-have-valid-default-values-and-that-besttimetocontact-and-bestdaytocontact-fields-are-properly-initialized-and-validated-before-submission",
+      "title": "In the ContactSection component (frontend/src/components/ContactSection.tsx), ensure all form fields have valid default values and that bestTimeToContact and bestDayToContact fields are properly initialized and validated before submission",
+      "reqIds": [
+        "REQ-68"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -679,6 +728,26 @@
       "summary": "Update the backend ContactFormSubmission type in backend/main.mo to accommodate the new bestTimeToContact format (specific hour) and bestDayToContact format (day of month as a number) if the current Text type is insufficient",
       "reqIds": [
         "REQ-56"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-44",
+      "summary": "Make the contact form time and day-of-month fields scrollable selectors/dropdowns instead of free text inputs",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Modify the admin panel 'Access Denied' page to display the user's Principal ID so Jonathan can easily find and share it for whitelisting",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-48",
+      "summary": "In the backend main.mo actor, verify the saveContactFormSubmission method correctly handles all required fields (firstName, lastName, state, productInterest, coverageAmount, age, gender, comments, bestTimeToContact, bestDayToContact) and add error logging for any validation or storage failures",
+      "reqIds": [
+        "REQ-67"
       ],
       "status": "pending"
     }

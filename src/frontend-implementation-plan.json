@@ -1,72 +1,56 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Replace time/day dropdowns with hour selector and day-of-month input in contact form",
+  "title": "Fix contact form submission error with comprehensive error logging",
   "requirements": [
     {
-      "id": "REQ-58",
-      "summary": "Replace bestTimeToContact dropdown with hour selector allowing clients to choose a specific hour throughout the day in 12-hour or 24-hour format",
+      "id": "REQ-65",
+      "summary": "Add comprehensive error logging to ContactSection form submission handler to capture exact error details when submission fails",
       "acceptanceCriteria": [
-        "The bestTimeToContact field displays as a dropdown or select input with hourly time options",
-        "All 24 hours of the day are available as selection options",
-        "The selected hour value is captured in the form state",
-        "The field is positioned where the current bestTimeToContact dropdown exists in the form"
+        "Error logging captures the full error object including message, stack trace, and any backend response details",
+        "Console logs show clear, readable error information when form submission fails",
+        "Error state displays the specific error message to help diagnose the issue"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/ContactSection.tsx",
           "operation": "modify",
-          "description": "Replace the bestTimeToContact dropdown field with an hour selector that provides all 24 hours as options in either 12-hour format (1:00 AM through 12:00 AM) or 24-hour format (00:00 through 23:00). Update the select element's options to generate hourly time values dynamically. Ensure the form state captures the selected hour value and the field maintains its current position in the form layout."
+          "description": "Enhance the handleSubmit function to add comprehensive error logging. Wrap the mutation.mutateAsync call in a try-catch block that logs the full error object, error.message, error.stack, and any error.cause properties. Add console.error statements with structured labels to identify error origin. Update the error state to display the specific error message from the caught error. Log form data being submitted to help correlate errors with inputs. Ensure all error paths are logged before setting error state."
         }
       ]
     },
     {
-      "id": "REQ-59",
-      "summary": "Replace bestDayToContact dropdown with day-of-month input allowing clients to enter or select a specific day (1-31)",
+      "id": "REQ-66",
+      "summary": "Add error handling and logging to useSubmitContactForm mutation hook to identify submission failure root cause (actor unavailability, network issues, backend method errors, or data validation)",
       "acceptanceCriteria": [
-        "The bestDayToContact field displays as either a number input or dropdown with values 1-31",
-        "The selected day value is captured in the form state",
-        "The field is positioned where the current bestDayToContact dropdown exists in the form",
-        "Input validation ensures only valid day numbers (1-31) can be entered"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/ContactSection.tsx",
-          "operation": "modify",
-          "description": "Replace the bestDayToContact dropdown field with either a number input (with min=1, max=31) or a select dropdown containing values 1-31. Add input validation to ensure only valid day numbers can be entered or selected. Update the form state to capture the day-of-month value and maintain the field's current position in the form layout."
-        }
-      ]
-    },
-    {
-      "id": "REQ-60",
-      "summary": "Update the useSubmitContactForm mutation hook to submit the new bestTimeToContact and bestDayToContact values to the backend",
-      "acceptanceCriteria": [
-        "The mutation correctly maps the hour selector value to bestTimeToContact field",
-        "The mutation correctly maps the day-of-month value to bestDayToContact field",
-        "Form submission successfully saves the new time and day format to the backend"
+        "Hook logs the actor availability state before attempting submission",
+        "Network errors are caught and logged with full details",
+        "Backend method call failures include the method name and parameters sent",
+        "Console clearly indicates which stage of submission failed"
       ],
       "file_operations": [
         {
           "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Update the useSubmitContactForm mutation hook to correctly pass the new bestTimeToContact value (specific hour format from the hour selector) and bestDayToContact value (day of month number) to the backend submitContactForm method. Ensure the values are properly formatted as strings when calling the backend method, maintaining compatibility with the existing backend Text field types."
+          "description": "Enhance the useSubmitContactForm mutation function to add comprehensive error logging at each stage. Log actor availability status at the start of mutationFn. Wrap the actor.submitContactForm call in a try-catch block that logs the method name, all parameters being sent (firstName, lastName, state, productInterest, coverageAmount, age, gender, additionalComments, bestTimeToContact, bestDayToContact), and the full error object if the call fails. Add specific logging for enum conversion (Gender, ProductInterest) to verify correct mapping. Log network-related errors separately from backend method errors. Include timestamps in console logs to track timing issues. Re-throw errors after logging to preserve error propagation to the component."
         }
       ]
     },
     {
-      "id": "REQ-61",
-      "summary": "Update the admin panel submissions table to display bestTimeToContact and bestDayToContact in readable formats",
+      "id": "REQ-68",
+      "summary": "Ensure all ContactSection form fields have valid default values and proper validation, especially for bestTimeToContact and bestDayToContact fields",
       "acceptanceCriteria": [
-        "The bestTimeToContact column displays the hour in a human-readable format (e.g., '2:00 PM' or '14:00')",
-        "The bestDayToContact column displays the day number (e.g., '15' or 'Day 15')",
-        "Both columns are visible in the submissions table",
-        "The data displays correctly for all existing and new submissions"
+        "All form fields have appropriate default values that match backend expected types",
+        "BestTimeToContact field value is properly formatted (specific hour string)",
+        "BestDayToContact field value is a valid day number (1-31) as a string",
+        "Form validation prevents submission if required fields are missing or invalid",
+        "Client-side validation messages clearly indicate which fields need correction"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/AdminPanel.tsx",
+          "path": "frontend/src/components/ContactSection.tsx",
           "operation": "modify",
-          "description": "Update the submissions table to display the bestTimeToContact column showing the specific hour in a human-readable format (e.g., '2:00 PM' or '14:00') and the bestDayToContact column showing the day of month number in a readable format (e.g., '15' or 'Day 15'). Ensure both columns are visible in the table and properly render values from both existing and new submissions."
+          "description": "Review and update the initial formData state to ensure all fields have valid default values matching backend expectations. Verify bestTimeToContact has a valid hour string default (e.g., '9:00 AM'). Verify bestDayToContact has a valid day number string default (e.g., '1'). Add client-side validation before form submission that checks all required fields are filled and formatted correctly. Add console.log statement in handleSubmit to log the complete formData object before submission to verify all values. Add inline validation error messages for each field that displays when validation fails. Ensure productInterest and gender fields map correctly to the ProductInterest and Gender enum values expected by the backend. Add field-level validation helpers that check format and range constraints."
         }
       ]
     }

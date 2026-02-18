@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { AlertCircle, ShieldAlert, User } from 'lucide-react';
+import { AlertCircle, ShieldAlert, User, Copy, Check } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -22,6 +22,7 @@ export default function AdminPanel() {
   const saveProfile = useSaveCallerUserProfile();
 
   const [profileName, setProfileName] = useState('');
+  const [copied, setCopied] = useState(false);
 
   const isAuthenticated = !!identity;
   const showProfileSetup = isAuthenticated && !profileLoading && profileFetched && userProfile === null;
@@ -29,6 +30,15 @@ export default function AdminPanel() {
   const handleSaveProfile = async () => {
     if (profileName.trim()) {
       await saveProfile.mutateAsync({ name: profileName.trim() });
+    }
+  };
+
+  const handleCopyPrincipal = async () => {
+    if (identity) {
+      const principalId = identity.getPrincipal().toString();
+      await navigator.clipboard.writeText(principalId);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   };
 
@@ -108,9 +118,11 @@ export default function AdminPanel() {
 
   // Show access denied if not admin (only after admin check is complete)
   if (adminCheckFetched && !isAdmin) {
+    const principalId = identity?.getPrincipal().toString() || '';
+    
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-light via-background to-accent-blue/5 flex items-center justify-center p-6">
-        <Card className="max-w-md w-full">
+        <Card className="max-w-2xl w-full">
           <CardHeader className="text-center">
             <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <AlertCircle className="w-8 h-8 text-destructive" />
@@ -120,11 +132,50 @@ export default function AdminPanel() {
               You do not have permission to access the admin panel.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <LoginButton />
-            <Link to="/" className="text-center text-sm text-muted-foreground hover:text-accent-blue transition-colors">
-              ← Back to homepage
-            </Link>
+          <CardContent className="flex flex-col gap-6">
+            <Alert className="bg-accent-blue/5 border-accent-blue">
+              <AlertCircle className="h-4 w-4 text-accent-blue" />
+              <AlertTitle className="text-navy">Your Principal ID</AlertTitle>
+              <AlertDescription className="text-sm text-muted-foreground">
+                Share this Principal ID with the administrator to request access:
+              </AlertDescription>
+            </Alert>
+            
+            <div className="space-y-2">
+              <div className="relative">
+                <code className="block w-full p-4 bg-slate-light/50 border-2 border-border rounded-lg text-sm font-mono break-all text-navy">
+                  {principalId}
+                </code>
+                <Button
+                  onClick={handleCopyPrincipal}
+                  size="sm"
+                  variant="outline"
+                  className="absolute top-2 right-2 h-8 px-3"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-4 h-4 mr-1" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4 mr-1" />
+                      Copy
+                    </>
+                  )}
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                This Principal ID needs to be whitelisted by an administrator to grant you access to the admin panel.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 pt-2">
+              <LoginButton />
+              <Link to="/" className="text-center text-sm text-muted-foreground hover:text-accent-blue transition-colors">
+                ← Back to homepage
+              </Link>
+            </div>
           </CardContent>
         </Card>
       </div>

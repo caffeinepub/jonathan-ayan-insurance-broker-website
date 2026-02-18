@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-replace-the-besttimetocontact-dropdown-field-with-an-hour-selector-that-allows-clients-to-choose-a-specific-hour-throughout-the-day-in-12-hour-format-1-00-am-2-00-am-11-00-am-12-00-pm-1-00-pm-11-00-pm-12-00-am-or-24-hour-format-00-00-through-23-00",
-      "featureTitle": "In the ContactSection component (frontend/src/components/ContactSection.tsx), replace the bestTimeToContact dropdown field with an hour selector that allows clients to choose a specific hour throughout the day in 12-hour format (1:00 AM, 2:00 AM, ..., 11:00 AM, 12:00 PM, 1:00 PM, ..., 11:00 PM, 12:00 AM) or 24-hour format (00:00 through 23:00)",
+      "featureId": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-add-comprehensive-error-logging-to-the-form-submission-handler-to-capture-the-exact-error-message-and-details-when-the-submit-operation-fails",
+      "featureTitle": "In the ContactSection component (frontend/src/components/ContactSection.tsx), add comprehensive error logging to the form submission handler to capture the exact error message and details when the submit operation fails",
       "files": [
         "frontend/src/components/ContactSection.tsx"
       ],
@@ -16,32 +16,13 @@
         "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-58"
+        "REQ-65"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-replace-the-bestdaytocontact-dropdown-field-with-a-day-of-month-input-that-allows-clients-to-enter-or-select-a-specific-day-of-the-month-1-31",
-      "featureTitle": "In the ContactSection component (frontend/src/components/ContactSection.tsx), replace the bestDayToContact dropdown field with a day-of-month input that allows clients to enter or select a specific day of the month (1-31)",
-      "files": [
-        "frontend/src/components/ContactSection.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-59"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-the-usesubmitcontactform-mutation-hook-in-frontend-src-hooks-usequeries-ts-to-submit-the-new-besttimetocontact-value-specific-hour-format-and-bestdaytocontact-value-day-of-month-number-to-the-backend",
-      "featureTitle": "Update the useSubmitContactForm mutation hook in frontend/src/hooks/useQueries.ts to submit the new bestTimeToContact value (specific hour format) and bestDayToContact value (day of month number) to the backend",
+      "featureId": "feature-in-the-usesubmitcontactform-mutation-hook-frontend-src-hooks-usequeries-ts-add-error-handling-and-logging-to-identify-whether-the-submission-failure-is-due-to-actor-unavailability-network-issues-backend-method-errors-or-data-validation-problems",
+      "featureTitle": "In the useSubmitContactForm mutation hook (frontend/src/hooks/useQueries.ts), add error handling and logging to identify whether the submission failure is due to actor unavailability, network issues, backend method errors, or data validation problems",
       "files": [
         "frontend/src/hooks/useQueries.ts"
       ],
@@ -54,15 +35,15 @@
         "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-60"
+        "REQ-66"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-the-admin-panel-submissions-table-in-frontend-src-pages-adminpanel-tsx-to-display-the-besttimetocontact-column-showing-the-specific-hour-format-and-the-bestdaytocontact-column-showing-the-day-of-month-number-in-a-readable-format",
-      "featureTitle": "Update the admin panel submissions table in frontend/src/pages/AdminPanel.tsx to display the bestTimeToContact column showing the specific hour format and the bestDayToContact column showing the day of month number in a readable format",
+      "featureId": "feature-in-the-contactsection-component-frontend-src-components-contactsection-tsx-ensure-all-form-fields-have-valid-default-values-and-that-besttimetocontact-and-bestdaytocontact-fields-are-properly-initialized-and-validated-before-submission",
+      "featureTitle": "In the ContactSection component (frontend/src/components/ContactSection.tsx), ensure all form fields have valid default values and that bestTimeToContact and bestDayToContact fields are properly initialized and validated before submission",
       "files": [
-        "frontend/src/pages/AdminPanel.tsx"
+        "frontend/src/components/ContactSection.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -73,7 +54,7 @@
         "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-61"
+        "REQ-68"
       ],
       "confidence": "high"
     }

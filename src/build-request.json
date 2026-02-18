@@ -1,87 +1,94 @@
 {
   "kind": "build_request",
-  "title": "Replace time/day dropdowns with hour selector and day-of-month input in contact form",
-  "priority": "normal",
+  "title": "Fix contact form submission error",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-58",
-      "text": "In the ContactSection component (frontend/src/components/ContactSection.tsx), replace the bestTimeToContact dropdown field with an hour selector that allows clients to choose a specific hour throughout the day in 12-hour format (1:00 AM, 2:00 AM, ..., 11:00 AM, 12:00 PM, 1:00 PM, ..., 11:00 PM, 12:00 AM) or 24-hour format (00:00 through 23:00)",
+      "id": "REQ-65",
+      "text": "In the ContactSection component (frontend/src/components/ContactSection.tsx), add comprehensive error logging to the form submission handler to capture the exact error message and details when the submit operation fails",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-time-day-request"
+          "msg-latest"
         ],
         "quotes": [
-          "At the form at the bottom of the website where the best time to contact give the client the option of selecting a specific time throughout the day a specific hour"
+          "it does not let me submit form on the website. it shows error submitting"
         ]
       },
       "acceptanceCriteria": [
-        "The bestTimeToContact field displays as a dropdown or select input with hourly time options",
-        "All 24 hours of the day are available as selection options",
-        "The selected hour value is captured in the form state",
-        "The field is positioned where the current bestTimeToContact dropdown exists in the form"
+        "Error logging captures the full error object including message, stack trace, and any backend response details",
+        "Console logs show clear, readable error information when form submission fails",
+        "Error state displays the specific error message to help diagnose the issue"
       ]
     },
     {
-      "id": "REQ-59",
-      "text": "In the ContactSection component (frontend/src/components/ContactSection.tsx), replace the bestDayToContact dropdown field with a day-of-month input that allows clients to enter or select a specific day of the month (1-31)",
+      "id": "REQ-66",
+      "text": "In the useSubmitContactForm mutation hook (frontend/src/hooks/useQueries.ts), add error handling and logging to identify whether the submission failure is due to actor unavailability, network issues, backend method errors, or data validation problems",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-time-day-request"
+          "msg-latest"
         ],
         "quotes": [
-          "where the best day to contact give an option to where the client can actually fill in a specific day out of the month"
+          "it does not let me submit form on the website. it shows error submitting"
         ]
       },
       "acceptanceCriteria": [
-        "The bestDayToContact field displays as either a number input or dropdown with values 1-31",
-        "The selected day value is captured in the form state",
-        "The field is positioned where the current bestDayToContact dropdown exists in the form",
-        "Input validation ensures only valid day numbers (1-31) can be entered"
+        "Hook logs the actor availability state before attempting submission",
+        "Network errors are caught and logged with full details",
+        "Backend method call failures include the method name and parameters sent",
+        "Console clearly indicates which stage of submission failed"
       ]
     },
     {
-      "id": "REQ-60",
-      "text": "Update the useSubmitContactForm mutation hook in frontend/src/hooks/useQueries.ts to submit the new bestTimeToContact value (specific hour format) and bestDayToContact value (day of month number) to the backend",
-      "target": "frontend",
+      "id": "REQ-67",
+      "text": "In the backend main.mo actor, verify the saveContactFormSubmission method correctly handles all required fields (firstName, lastName, state, productInterest, coverageAmount, age, gender, comments, bestTimeToContact, bestDayToContact) and add error logging for any validation or storage failures",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-user-time-day-request"
+          "msg-latest"
+        ],
+        "quotes": [
+          "it does not let me submit form on the website. it shows error submitting"
         ]
       },
       "acceptanceCriteria": [
-        "The mutation correctly maps the hour selector value to bestTimeToContact field",
-        "The mutation correctly maps the day-of-month value to bestDayToContact field",
-        "Form submission successfully saves the new time and day format to the backend"
+        "Backend method validates all required fields and returns clear error messages for invalid data",
+        "Storage operations are wrapped in error handling that logs failure reasons",
+        "Method returns success/failure status that frontend can interpret",
+        "All enum conversions (Gender, ProductInterest) handle invalid values gracefully"
       ]
     },
     {
-      "id": "REQ-61",
-      "text": "Update the admin panel submissions table in frontend/src/pages/AdminPanel.tsx to display the bestTimeToContact column showing the specific hour format and the bestDayToContact column showing the day of month number in a readable format",
+      "id": "REQ-68",
+      "text": "In the ContactSection component (frontend/src/components/ContactSection.tsx), ensure all form fields have valid default values and that bestTimeToContact and bestDayToContact fields are properly initialized and validated before submission",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-time-day-request"
+          "msg-latest"
+        ],
+        "quotes": [
+          "it does not let me submit form on the website. it shows error submitting"
         ]
       },
       "acceptanceCriteria": [
-        "The bestTimeToContact column displays the hour in a human-readable format (e.g., '2:00 PM' or '14:00')",
-        "The bestDayToContact column displays the day number (e.g., '15' or 'Day 15')",
-        "Both columns are visible in the submissions table",
-        "The data displays correctly for all existing and new submissions"
+        "All form fields have appropriate default values that match backend expected types",
+        "BestTimeToContact field value is properly formatted (specific hour string)",
+        "BestDayToContact field value is a valid day number (1-31) as a string",
+        "Form validation prevents submission if required fields are missing or invalid",
+        "Client-side validation messages clearly indicate which fields need correction"
       ]
     }
   ],
   "constraints": [
-    "Do not modify the backend ContactFormSubmission type structure - it already uses Text fields that can accommodate these new formats",
-    "Preserve all other contact form fields and their current functionality",
-    "Maintain the existing form validation and submission flow"
+    "Do not change the backend ContactFormSubmission data model structure",
+    "Maintain the existing useActor hook implementation for actor initialization",
+    "Preserve the current Internet Identity authentication flow"
   ],
   "nonGoals": [
-    "Changing the backend data model or migration logic",
-    "Modifying any other sections of the website beyond the contact form and admin panel",
-    "Adding date picker libraries or complex calendar widgets"
+    "Redesigning the contact form UI layout",
+    "Adding new form fields beyond the existing ones",
+    "Changing the admin panel submission viewing functionality"
   ],
   "imageRequirements": {
     "required": [],

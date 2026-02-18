@@ -78,31 +78,97 @@ export function useSubmitContactForm() {
       bestTimeToContact: string;
       bestDayToContact: string;
     }) => {
-      if (!actor) throw new Error('Actor not available');
+      console.log('=== MUTATION FUNCTION STARTED ===');
+      console.log('Timestamp:', new Date().toISOString());
+      console.log('Actor availability:', !!actor);
+      
+      if (!actor) {
+        console.error('ERROR: Actor not available');
+        throw new Error('Actor not available');
+      }
 
-      // Map frontend values to backend enum types
-      const productInterest = data.productInterest === 'life-insurance' 
-        ? ProductInterest.lifeInsurance 
-        : ProductInterest.annuities;
+      console.log('Actor is available, proceeding with data transformation...');
 
-      const gender = data.gender === 'male' ? Gender.male : Gender.female;
+      try {
+        // Map frontend values to backend enum types
+        console.log('Mapping productInterest:', data.productInterest);
+        const productInterest = data.productInterest === 'life-insurance' 
+          ? ProductInterest.lifeInsurance 
+          : ProductInterest.annuities;
+        console.log('Mapped productInterest to:', productInterest);
 
-      // Convert coverage amount string to number (remove $ and commas)
-      const coverageAmount = data.coverageAmount.replace(/[$,]/g, '');
-      const coverageAmountBigInt = coverageAmount ? BigInt(coverageAmount) : BigInt(0);
+        console.log('Mapping gender:', data.gender);
+        const gender = data.gender === 'male' ? Gender.male : Gender.female;
+        console.log('Mapped gender to:', gender);
 
-      return actor.submitContactForm(
-        data.firstName,
-        data.lastName,
-        data.state,
-        productInterest,
-        coverageAmountBigInt,
-        BigInt(data.age),
-        gender,
-        data.additionalComments,
-        data.bestTimeToContact,
-        data.bestDayToContact
-      );
+        // Convert coverage amount string to number (remove $ and commas)
+        console.log('Converting coverageAmount:', data.coverageAmount);
+        const coverageAmount = data.coverageAmount.replace(/[$,]/g, '');
+        const coverageAmountBigInt = coverageAmount ? BigInt(coverageAmount) : BigInt(0);
+        console.log('Converted coverageAmount to BigInt:', coverageAmountBigInt.toString());
+
+        console.log('Converting age:', data.age);
+        const ageBigInt = BigInt(data.age);
+        console.log('Converted age to BigInt:', ageBigInt.toString());
+
+        console.log('Calling backend submitContactForm with parameters:');
+        console.log('  firstName:', data.firstName);
+        console.log('  lastName:', data.lastName);
+        console.log('  state:', data.state);
+        console.log('  productInterest:', productInterest);
+        console.log('  coverageAmount:', coverageAmountBigInt.toString());
+        console.log('  age:', ageBigInt.toString());
+        console.log('  gender:', gender);
+        console.log('  additionalComments:', data.additionalComments);
+        console.log('  bestTimeToContact:', data.bestTimeToContact);
+        console.log('  bestDayToContact:', data.bestDayToContact);
+
+        const result = await actor.submitContactForm(
+          data.firstName,
+          data.lastName,
+          data.state,
+          productInterest,
+          coverageAmountBigInt,
+          ageBigInt,
+          gender,
+          data.additionalComments,
+          data.bestTimeToContact,
+          data.bestDayToContact
+        );
+
+        console.log('✓ Backend call successful');
+        console.log('Result:', result);
+        return result;
+      } catch (error: any) {
+        console.error('=== MUTATION ERROR ===');
+        console.error('Error timestamp:', new Date().toISOString());
+        console.error('Error during backend call or data transformation');
+        console.error('Full error object:', error);
+        console.error('Error message:', error?.message);
+        console.error('Error name:', error?.name);
+        console.error('Error stack:', error?.stack);
+        console.error('Error cause:', error?.cause);
+        
+        if (error?.response) {
+          console.error('Error response data:', error.response);
+        }
+        
+        if (error?.request) {
+          console.error('Error request data:', error.request);
+        }
+
+        // Check for specific error types
+        if (error instanceof TypeError) {
+          console.error('TypeError detected - likely data conversion issue');
+        } else if (error instanceof RangeError) {
+          console.error('RangeError detected - likely BigInt conversion issue');
+        }
+
+        console.error('=== END MUTATION ERROR LOG ===');
+        
+        // Re-throw to propagate to component
+        throw error;
+      }
     },
   });
 }

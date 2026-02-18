@@ -41,18 +41,76 @@ export default function ContactSection() {
     age: '',
     additionalComments: '',
     gender: '',
-    bestTimeToContact: '',
-    bestDayToContact: ''
+    bestTimeToContact: '9:00 AM',
+    bestDayToContact: '1'
   });
 
   const [showSuccess, setShowSuccess] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const submitForm = useSubmitContactForm();
+
+  const validateForm = (): boolean => {
+    const errors: string[] = [];
+
+    if (!formData.firstName.trim()) {
+      errors.push('First name is required');
+    }
+    if (!formData.lastName.trim()) {
+      errors.push('Last name is required');
+    }
+    if (!formData.state) {
+      errors.push('State is required');
+    }
+    if (!formData.productInterest) {
+      errors.push('Product interest is required');
+    }
+    if (!formData.age || parseInt(formData.age) < 18 || parseInt(formData.age) > 120) {
+      errors.push('Valid age (18-120) is required');
+    }
+    if (!formData.gender) {
+      errors.push('Gender is required');
+    }
+    if (!formData.bestTimeToContact) {
+      errors.push('Best time to contact is required');
+    }
+    if (!formData.bestDayToContact) {
+      errors.push('Best day to contact is required');
+    }
+
+    // Validate bestDayToContact is a valid day number
+    const dayNum = parseInt(formData.bestDayToContact);
+    if (isNaN(dayNum) || dayNum < 1 || dayNum > 31) {
+      errors.push('Best day to contact must be between 1 and 31');
+    }
+
+    // Validate bestTimeToContact is in the correct format
+    if (formData.bestTimeToContact && !HOUR_OPTIONS.includes(formData.bestTimeToContact)) {
+      errors.push('Best time to contact must be a valid hour');
+    }
+
+    setValidationErrors(errors);
+    return errors.length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setShowSuccess(false);
+    setValidationErrors([]);
+    setErrorMessage('');
+
+    console.log('=== FORM SUBMISSION STARTED ===');
+    console.log('Timestamp:', new Date().toISOString());
+    console.log('Form data being submitted:', JSON.stringify(formData, null, 2));
+
+    // Client-side validation
+    if (!validateForm()) {
+      console.error('Form validation failed:', validationErrors);
+      return;
+    }
 
     try {
+      console.log('Calling mutation with validated data...');
       await submitForm.mutateAsync({
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -66,6 +124,8 @@ export default function ContactSection() {
         bestDayToContact: formData.bestDayToContact,
       });
 
+      console.log('✓ Form submission successful');
+
       // Clear form and show success message
       setFormData({
         firstName: '',
@@ -76,15 +136,34 @@ export default function ContactSection() {
         age: '',
         additionalComments: '',
         gender: '',
-        bestTimeToContact: '',
-        bestDayToContact: ''
+        bestTimeToContact: '9:00 AM',
+        bestDayToContact: '1'
       });
       setShowSuccess(true);
 
       // Hide success message after 5 seconds
       setTimeout(() => setShowSuccess(false), 5000);
-    } catch (error) {
-      console.error('Form submission error:', error);
+    } catch (error: any) {
+      console.error('=== FORM SUBMISSION ERROR ===');
+      console.error('Error timestamp:', new Date().toISOString());
+      console.error('Full error object:', error);
+      console.error('Error message:', error?.message);
+      console.error('Error name:', error?.name);
+      console.error('Error stack:', error?.stack);
+      console.error('Error cause:', error?.cause);
+      
+      if (error?.response) {
+        console.error('Error response:', error.response);
+      }
+      
+      if (error?.request) {
+        console.error('Error request:', error.request);
+      }
+
+      // Set user-friendly error message
+      const errorMsg = error?.message || 'An unknown error occurred';
+      setErrorMessage(errorMsg);
+      console.error('=== END ERROR LOG ===');
     }
   };
 
@@ -119,12 +198,22 @@ export default function ContactSection() {
                 </Alert>
               )}
 
-              {submitForm.isError && (
+              {(submitForm.isError || validationErrors.length > 0) && (
                 <Alert className="mb-6 bg-red-50 border-red-200">
                   <AlertCircle className="h-4 w-4 text-red-600" />
                   <AlertTitle className="text-red-800">Error</AlertTitle>
                   <AlertDescription className="text-red-700">
-                    There was an error submitting your request. Please try again or contact me directly.
+                    {validationErrors.length > 0 ? (
+                      <ul className="list-disc list-inside space-y-1">
+                        {validationErrors.map((error, idx) => (
+                          <li key={idx}>{error}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <>
+                        {errorMessage || 'There was an error submitting your request. Please try again or contact me directly.'}
+                      </>
+                    )}
                   </AlertDescription>
                 </Alert>
               )}
@@ -264,44 +353,40 @@ export default function ContactSection() {
                     <Label htmlFor="bestTimeToContact" className="text-navy font-semibold">
                       Best Time to Contact *
                     </Label>
-                    <Select
-                      value={formData.bestTimeToContact}
-                      onValueChange={(value) => setFormData({ ...formData, bestTimeToContact: value })}
+                    <select
+                      id="bestTimeToContact"
                       required
+                      size={6}
+                      value={formData.bestTimeToContact}
+                      onChange={(e) => setFormData({ ...formData, bestTimeToContact: e.target.value })}
+                      className="w-full rounded-lg border-2 border-border focus:border-accent-blue focus:outline-none focus:ring-2 focus:ring-accent-blue/20 bg-background px-3 py-2 text-sm transition-colors"
                     >
-                      <SelectTrigger id="bestTimeToContact" className="rounded-lg border-2 border-border focus:border-accent-blue">
-                        <SelectValue placeholder="Select hour" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {HOUR_OPTIONS.map((hour) => (
-                          <SelectItem key={hour} value={hour}>
-                            {hour}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      {HOUR_OPTIONS.map((hour) => (
+                        <option key={hour} value={hour} className="py-1">
+                          {hour}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="bestDayToContact" className="text-navy font-semibold">
                       Best Day to Contact *
                     </Label>
-                    <Select
-                      value={formData.bestDayToContact}
-                      onValueChange={(value) => setFormData({ ...formData, bestDayToContact: value })}
+                    <select
+                      id="bestDayToContact"
                       required
+                      size={6}
+                      value={formData.bestDayToContact}
+                      onChange={(e) => setFormData({ ...formData, bestDayToContact: e.target.value })}
+                      className="w-full rounded-lg border-2 border-border focus:border-accent-blue focus:outline-none focus:ring-2 focus:ring-accent-blue/20 bg-background px-3 py-2 text-sm transition-colors"
                     >
-                      <SelectTrigger id="bestDayToContact" className="rounded-lg border-2 border-border focus:border-accent-blue">
-                        <SelectValue placeholder="Select day of month" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {DAY_OPTIONS.map((day) => (
-                          <SelectItem key={day} value={day}>
-                            Day {day}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      {DAY_OPTIONS.map((day) => (
+                        <option key={day} value={day} className="py-1">
+                          Day {day}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
