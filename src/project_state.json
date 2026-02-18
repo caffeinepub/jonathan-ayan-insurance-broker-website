@@ -4,14 +4,14 @@
   "summary": "New project",
   "architectural_notes": [],
   "known_issues": [
-    "Admin access works in draft environment but fails in production after publishing"
+    "User reporting access/permission issue after deployment"
   ],
   "isFixRequest": true,
   "existing_features": [],
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Ensure the admin whitelist in the backend's main actor uses the same Principal ID configuration for both draft and production environments so that admin access works consistently after publishing",
+      "summary": "Fix the admin authorization system so that the Principal ID '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-s' is properly recognized as an admin and granted access to the admin panel in production",
       "reqIds": [
         "REQ-1"
       ],
@@ -19,14 +19,14 @@
     },
     {
       "id": "AR-2",
-      "summary": "Verify that the admin Principal ID whitelist persists correctly during canister upgrades and is not reset when deploying from draft to production",
+      "summary": "Ensure admin Principal IDs persist correctly across canister upgrades so that authorized admins do not lose access after deployment",
       "reqIds": [
         "REQ-2"
       ],
       "status": "pending"
     }
   ],
-  "projectName": "Insurance Broker Portal",
+  "projectName": "Fix admin access authorization issue in production",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

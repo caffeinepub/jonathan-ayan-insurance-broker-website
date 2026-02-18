@@ -1,10 +1,10 @@
 # Specification
 
 ## Summary
-**Goal:** Fix admin access in the production environment so that authorized users can access the admin panel after publishing.
+**Goal:** Fix admin authorization so that the Principal ID '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-s' can access the admin panel in production.
 
 **Planned changes:**
-- Ensure admin whitelist in backend uses consistent Principal ID configuration across draft and production environments
-- Verify admin whitelist persists correctly during canister upgrades and deployments
+- Fix the backend authorization system to properly recognize the specified Principal ID as an admin
+- Ensure admin Principal IDs persist in stable storage across canister upgrades
 
-**User-visible outcome:** Admin users can successfully access the admin panel at /admin in the production environment after publishing, with the same credentials that work in the draft environment.
+**User-visible outcome:** The user with Principal ID '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-s' can successfully access the admin panel without seeing the "Access Denied" error, and this access persists after deployments.

@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-18T20:49:31.158Z",
+  "generatedAt": "2026-02-18T21:30:02.487Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -12,14 +12,14 @@
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Ensure the admin whitelist in the backend's main actor uses the same Principal ID configuration for both draft and production environments so that admin access works consistently after publishing",
+        "summary": "Fix the admin authorization system so that the Principal ID '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-s' is properly recognized as an admin and granted access to the admin panel in production",
         "status": "unknown",
         "plannedFiles": [],
         "matchedFiles": []
       },
       {
         "id": "REQ-2",
-        "summary": "Verify that the admin Principal ID whitelist persists correctly during canister upgrades and is not reset when deploying from draft to production",
+        "summary": "Ensure admin Principal IDs persist correctly across canister upgrades so that authorized admins do not lose access after deployment",
         "status": "unknown",
         "plannedFiles": [],
         "matchedFiles": []
@@ -28,6 +28,7 @@
   },
   "changedFiles": [
     "backend/main.mo",
+    "backend/migration.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-implementation-plan.json",

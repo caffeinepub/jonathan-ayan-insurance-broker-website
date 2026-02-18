@@ -2,42 +2,23 @@ import List "mo:core/List";
 import Map "mo:core/Map";
 import Principal "mo:core/Principal";
 import Runtime "mo:core/Runtime";
+import AccessControl "authorization/access-control";
 import Array "mo:core/Array";
 import Text "mo:core/Text";
 import MixinAuthorization "authorization/MixinAuthorization";
-import AccessControl "authorization/access-control";
+import Migration "migration";
 
+(with migration = Migration.run)
 actor {
+  // Initialize the access control state
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
 
-  let admins = List.fromArray([Principal.fromText("production-admin-principal-id")]);
+  // TYPES
 
   public type UserProfile = {
     name : Text;
-  };
-
-  let userProfiles = Map.empty<Principal, UserProfile>();
-
-  public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can save profiles");
-    };
-    userProfiles.get(caller);
-  };
-
-  public query ({ caller }) func getUserProfile(user : Principal) : async ?UserProfile {
-    if (caller != user and not AccessControl.isAdmin(accessControlState, caller)) {
-      Runtime.trap("Unauthorized: Can only view your own profile");
-    };
-    userProfiles.get(user);
-  };
-
-  public shared ({ caller }) func saveCallerUserProfile(profile : UserProfile) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can save profiles");
-    };
-    userProfiles.add(caller, profile);
+    // Other user metadata if needed
   };
 
   type ProductInterest = {
@@ -64,9 +45,39 @@ actor {
     bestDayToContact : Text;
   };
 
+  // DATA STRUCTURES
+
+  let userProfiles = Map.empty<Principal, UserProfile>();
   let submissions = List.empty<ContactFormSubmission>();
 
-  // Don't change needed for this one
+  // BACKEND LOGIC
+
+  // Get current user profile (requires user permission)
+  public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only users can view profiles");
+    };
+    userProfiles.get(caller);
+  };
+
+  // Get profile of any user (only accessible by profile owner or admin)
+  public query ({ caller }) func getUserProfile(user : Principal) : async ?UserProfile {
+    if (caller != user and not AccessControl.isAdmin(accessControlState, caller)) {
+      Runtime.trap("Unauthorized: Can only view your own profile");
+    };
+    userProfiles.get(user);
+  };
+
+  // Save current user profile (requires user permission)
+  public shared ({ caller }) func saveCallerUserProfile(
+    profile : UserProfile,
+  ) : async () {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only users can save profiles");
+    };
+    userProfiles.add(caller, profile);
+  };
+
   // Public contact form submission - allows guests (no authorization check)
   public shared ({ caller }) func submitContactForm(
     firstName : Text,
@@ -103,6 +114,7 @@ actor {
     submissions.toArray();
   };
 
+  // Get all submissions (requires admin permission)
   public query ({ caller }) func getAllSubmissions() : async [ContactFormSubmission] {
     if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
       Runtime.trap("Unauthorized: Only admins can view all submissions");
