@@ -11,7 +11,7 @@ actor {
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
 
-  let admins = List.fromArray([Principal.fromText("5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-sqe")]);
+  let admins = List.fromArray([Principal.fromText("production-admin-principal-id")]);
 
   public type UserProfile = {
     name : Text;
@@ -40,7 +40,6 @@ actor {
     userProfiles.add(caller, profile);
   };
 
-  // Contact form types
   type ProductInterest = {
     #lifeInsurance;
     #annuities;

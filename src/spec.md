@@ -1,9 +1,10 @@
 # Specification
 
 ## Summary
-**Goal:** Update the admin whitelist to allow the correct Principal ID to access the admin panel.
+**Goal:** Fix admin access in the production environment so that authorized users can access the admin panel after publishing.
 
 **Planned changes:**
-- Replace the whitelisted Principal ID in the backend from 'o6emp-est7q-rcxzc-yzqpr-bfbh5-2wpes-yh7ir-zzpdu-w7brm-eo53w-xqe' to '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-sqe'
+- Ensure admin whitelist in backend uses consistent Principal ID configuration across draft and production environments
+- Verify admin whitelist persists correctly during canister upgrades and deployments
 
-**User-visible outcome:** The user can access the admin panel at /admin without seeing 'Access Denied' when authenticated with the correct Principal ID.
+**User-visible outcome:** Admin users can successfully access the admin panel at /admin in the production environment after publishing, with the same credentials that work in the draft environment.

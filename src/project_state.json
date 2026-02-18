@@ -4,21 +4,29 @@
   "summary": "New project",
   "architectural_notes": [],
   "known_issues": [
-    "Admin access denied - incorrect Principal ID was whitelisted (old: o6emp-est7q-rcxzc-yzqpr-bfbh5-2wpes-yh7ir-zzpdu-w7brm-eo53w-xqe, new: 5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-sqe)"
+    "Admin access works in draft environment but fails in production after publishing"
   ],
   "isFixRequest": true,
   "existing_features": [],
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Replace the existing whitelisted Principal ID 'o6emp-est7q-rcxzc-yzqpr-bfbh5-2wpes-yh7ir-zzpdu-w7brm-eo53w-xqe' with the correct Principal ID '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-sqe' in the backend admin whitelist",
+      "summary": "Ensure the admin whitelist in the backend's main actor uses the same Principal ID configuration for both draft and production environments so that admin access works consistently after publishing",
       "reqIds": [
         "REQ-1"
       ],
       "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Verify that the admin Principal ID whitelist persists correctly during canister upgrades and is not reset when deploying from draft to production",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
     }
   ],
-  "projectName": "Update admin whitelist with correct Principal ID",
+  "projectName": "Insurance Broker Portal",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

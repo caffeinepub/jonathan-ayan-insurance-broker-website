@@ -1,6 +1,6 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Update admin whitelist with correct Principal ID",
+  "title": "Fix admin access in production environment",
   "requirements": []
 }

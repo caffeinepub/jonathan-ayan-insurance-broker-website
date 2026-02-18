@@ -1,35 +1,53 @@
 {
   "kind": "build_request",
-  "title": "Update admin whitelist with correct Principal ID",
+  "title": "Fix admin access in production environment",
+  "projectName": "Insurance Broker Portal",
   "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Replace the existing whitelisted Principal ID 'o6emp-est7q-rcxzc-yzqpr-bfbh5-2wpes-yh7ir-zzpdu-w7brm-eo53w-xqe' with the correct Principal ID '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-sqe' in the backend admin whitelist",
+      "text": "Ensure the admin whitelist in the backend's main actor uses the same Principal ID configuration for both draft and production environments so that admin access works consistently after publishing",
       "target": "backend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-6"
         ],
         "quotes": [
-          "My principle id is : 5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-sqe"
+          "Every time I publish it, my published website, I am not allowed in the admin website. I am allowed in the draft website when I go to the admin website, but when I get it published, I am not allowed in."
         ]
       },
       "acceptanceCriteria": [
-        "The Principal ID '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-sqe' is added to the admin whitelist in backend/main.mo",
-        "The old Principal ID 'o6emp-est7q-rcxzc-yzqpr-bfbh5-2wpes-yh7ir-zzpdu-w7brm-eo53w-xqe' is removed from the whitelist",
-        "User can successfully access the admin panel at /admin without seeing 'Access Denied' when authenticated with the correct Principal ID"
+        "Admin can successfully access the admin panel at /admin in the production environment after publishing",
+        "The isAdmin check returns true for the authorized Principal ID in production",
+        "Admin access continues to work in draft environment without regression"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Verify that the admin Principal ID whitelist persists correctly during canister upgrades and is not reset when deploying from draft to production",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin whitelist configuration survives deployment from draft to production",
+        "The same Principal ID that works in draft also works in production after publishing",
+        "No manual re-configuration is needed after each publish"
       ]
     }
   ],
   "constraints": [
-    "Preserve all existing admin panel functionality and access control logic",
-    "Maintain the MixinAuthorization and AccessControl module patterns used in the current implementation"
+    "Do not change the authentication mechanism (Internet Identity)",
+    "Maintain backward compatibility with existing admin authorization flow",
+    "Preserve the MixinAuthorization pattern currently in use"
   ],
   "nonGoals": [
-    "Adding multiple admin users",
-    "Implementing dynamic admin management UI",
-    "Changing the authentication mechanism"
+    "Adding new admin features or capabilities",
+    "Changing the admin panel UI",
+    "Modifying the contact form functionality",
+    "Adding multi-admin support"
   ],
   "imageRequirements": {
     "required": [],
