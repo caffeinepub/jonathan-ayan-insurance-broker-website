@@ -1,0 +1,20 @@
+{
+  "backend/main.mo": "Empty Motoko actor with no backend logic; all functionality is frontend-only.",
+  "feature_evidence.json": "Feature evidence report documenting five implemented features including homepage, companies section, services section, contact section, and professional design theme with high confidence.",
+  "frontend-file-summaries.txt": "JSON-formatted summaries of all frontend files describing components, styling, and configuration for the insurance broker website.",
+  "frontend/index.css": "Tailwind CSS configuration with OKLCH color system defining light and dark theme variables including navy, gold, and neutral tones for professional insurance branding.",
+  "frontend/index.html": "HTML entry point with root div and module script reference for the React application titled 'Jonathan Ayan Insurance Broker Website'.",
+  "frontend/src/App.tsx": "Main React app component composing the full page layout with HeroSection, ServicesSection, CompaniesSection, ContactSection, and Footer components.",
+  "frontend/src/components/CompaniesSection.tsx": "Section displaying A-rated insurance carriers (Mutual of Omaha, FNG, Transamerica, Ethos, Forrester) with badges and explanation of independent broker advantages.",
+  "frontend/src/components/ContactSection.tsx": "Contact information section with location, phone, email, and availability details plus a call-to-action for free consultation.",
+  "frontend/src/components/Footer.tsx": "Footer with branding, copyright, caffeine.ai attribution with UTM tracking, and professional licensing information.",
+  "frontend/src/components/HeroSection.tsx": "Hero section with Miami skyline background image, Jonathan Ayan's name and title, Shield icon, and call-to-action buttons to scroll to contact.",
+  "frontend/src/components/ServicesSection.tsx": "Services section with two cards explaining life insurance and annuities offerings, including benefits lists and generated service icons.",
+  "frontend/src/hooks/useActor.ts": "Custom React hook that creates and manages an authenticated or anonymous actor for backend communication, using Internet Identity and React Query with automatic query invalidation on identity changes.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Provides Internet Identity authentication context and provider for ICP, managing login/logout state, identity persistence, and delegation validation with configurable AuthClient options.",
+  "frontend/src/hooks/useQueries.ts": "Empty placeholder file indicating no backend query methods are needed since all content is static.",
+  "frontend/src/index.css": "Tailwind CSS configuration with custom design tokens for a professional insurance theme using navy blue primary colors, gold accents, and both light/dark mode support.",
+  "frontend/src/main.tsx": "Application entry point that sets up React Query client and Internet Identity provider, then renders the root App component.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending the theme with custom colors (navy, gold), typography, container settings, and animation keyframes for the insurance broker website design system.",
+  "project_state.json": "Project metadata defining a professional insurance broker website for Jonathan Ayan in Miami, with features for homepage, company showcase, services section, and contact information using a trustworthy navy/gold color scheme."
+}

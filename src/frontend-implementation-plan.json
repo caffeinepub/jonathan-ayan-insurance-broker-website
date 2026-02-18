@@ -1,0 +1,117 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Create insurance broker homepage for Jonathan Ayan",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Create professional homepage introducing Jonathan Ayan as a life and annuity insurance broker in Miami, Florida",
+      "acceptanceCriteria": [
+        "Homepage displays Jonathan Ayan's name prominently",
+        "Location (Miami, Florida) is clearly visible",
+        "Professional introduction describes broker services"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Replace default app content with a professional homepage structure featuring a hero section that prominently displays Jonathan Ayan's name, Miami Florida location, and professional introduction as a life and annuity insurance broker. Wire in the generated hero background image from frontend/public/assets/generated/hero-background.dim_1920x600.png as the hero section background."
+        },
+        {
+          "path": "frontend/src/components/HeroSection.tsx",
+          "operation": "create",
+          "description": "Create a hero section component that displays Jonathan Ayan's name as the main heading, subtitle identifying him as a life and annuity insurance broker, and location text showing Miami, Florida. Use the generated hero background image from frontend/public/assets/generated/hero-background.dim_1920x600.png as the section background with appropriate overlay for text readability."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Display section showcasing A-rated insurance companies represented including Mutual of Omaha, FNG, Transamerica, Ethos, and Forrester",
+      "acceptanceCriteria": [
+        "Section lists at least: Mutual of Omaha, FNG, Transamerica, Ethos, Forrester",
+        "Companies are presented in a clean, organized format",
+        "Section emphasizes A-rated status of companies"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/CompaniesSection.tsx",
+          "operation": "create",
+          "description": "Create a companies section component that displays a grid or list of A-rated insurance companies including Mutual of Omaha, FNG, Transamerica, Ethos, and Forrester. Include a heading that emphasizes the A-rated status of these companies and present them in a clean, professional layout."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Import and render the CompaniesSection component below the hero section in the homepage layout."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Create services section explaining life insurance and annuities offerings with clear assistance descriptions",
+      "acceptanceCriteria": [
+        "Life insurance services are explained",
+        "Annuities services are explained",
+        "Content clearly communicates available assistance"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ServicesSection.tsx",
+          "operation": "create",
+          "description": "Create a services section component with two main service cards: one for life insurance and one for annuities. Each card should include a heading, description of the service, and explanation of available assistance. Wire in the generated icons from frontend/public/assets/generated/life-insurance-icon.dim_64x64.png and frontend/public/assets/generated/annuities-icon.dim_64x64.png to visually represent each service."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Import and render the ServicesSection component below the CompaniesSection in the homepage layout."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Include contact information section for potential clients to reach Jonathan Ayan",
+      "acceptanceCriteria": [
+        "Contact section is easily accessible",
+        "Section includes relevant contact methods"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ContactSection.tsx",
+          "operation": "create",
+          "description": "Create a contact section component that displays contact information for Jonathan Ayan including relevant contact methods such as email and phone placeholders. Present the information in a clear, accessible format with appropriate labels."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Import and render the ContactSection component below the ServicesSection at the bottom of the homepage layout."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Design homepage with professional, trustworthy visual theme using navy blue, gold accents, crisp whites, clean typography, and stable layout",
+      "acceptanceCriteria": [
+        "Color scheme uses professional, trust-building colors",
+        "Typography is clear and professional",
+        "Layout conveys stability and expertise",
+        "Design is consistent across all homepage sections"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend the Tailwind theme with a professional color palette featuring navy blue as primary color, gold for accents, and crisp white for backgrounds. Add custom colors that convey trust and stability appropriate for financial services."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Define global typography styles using professional, clean fonts. Set base font properties, heading styles, and ensure consistent spacing that conveys stability and expertise throughout the application."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Apply the professional color scheme and typography to the main app container. Ensure consistent spacing, padding, and layout structure across all sections to convey stability and expertise."
+        }
+      ]
+    }
+  ]
+}

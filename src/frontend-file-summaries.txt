@@ -1,0 +1,11 @@
+{
+  "frontend/src/App.tsx": "Main application component that renders the complete homepage layout with hero, services, companies, contact sections, and footer.",
+  "frontend/src/components/HeroSection.tsx": "Hero section component featuring Jonathan Ayan's name, title, location, and call-to-action buttons with the generated hero background image.",
+  "frontend/src/components/ServicesSection.tsx": "Services section displaying two main service cards for life insurance and annuities with detailed descriptions and benefits using generated icons.",
+  "frontend/src/components/CompaniesSection.tsx": "Companies section showcasing A-rated insurance carriers including Mutual of Omaha, FNG, Transamerica, Ethos, and Forrester with emphasis on independent broker advantages.",
+  "frontend/src/components/ContactSection.tsx": "Contact section with detailed contact information including location, phone, email, and availability with a free consultation call-to-action.",
+  "frontend/src/components/Footer.tsx": "Footer component with branding, copyright, caffeine.ai attribution with UTM tracking, and professional licensing information.",
+  "frontend/src/index.css": "Global styles with OKLCH color system defining navy blue and gold color palette for professional insurance theme with custom utility classes.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with navy and gold color tokens, Inter font family, and minimal border radius for clean, professional aesthetic.",
+  "frontend/src/hooks/useQueries.ts": "Empty hooks file as backend has no methods; all content is static and rendered directly in components."
+}

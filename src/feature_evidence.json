@@ -1,0 +1,101 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-professional-homepage-that-introduces-jonathan-ayan-as-a-life-and-annuity-insurance-broker-based-in-miami-florida",
+      "featureTitle": "Create a professional homepage that introduces Jonathan Ayan as a life and annuity insurance broker based in Miami, Florida",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/HeroSection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-display-a-section-showcasing-the-a-rated-insurance-companies-jonathan-represents-including-mutual-of-omaha-fng-transamerica-ethos-and-forrester",
+      "featureTitle": "Display a section showcasing the A-rated insurance companies Jonathan represents, including Mutual of Omaha, FNG, Transamerica, Ethos, and Forrester",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/CompaniesSection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-services-section-explaining-life-insurance-and-annuities-offerings-with-clear-descriptions-of-what-assistance-is-available",
+      "featureTitle": "Create a services section explaining life insurance and annuities offerings with clear descriptions of what assistance is available",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ServicesSection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-include-contact-information-section-for-potential-clients-to-reach-jonathan-ayan",
+      "featureTitle": "Include contact information section for potential clients to reach Jonathan Ayan",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ContactSection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-design-the-homepage-with-a-professional-trustworthy-visual-theme-using-warm-sophisticated-colors-such-as-navy-blue-gold-accents-and-crisp-whites-clean-typography-and-a-layout-that-conveys-stability-and-expertise-appropriate-for-financial-services",
+      "featureTitle": "Design the homepage with a professional, trustworthy visual theme using warm, sophisticated colors (such as navy blue, gold accents, and crisp whites), clean typography, and a layout that conveys stability and expertise appropriate for financial services",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

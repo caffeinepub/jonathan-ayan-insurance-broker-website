@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Professional website for Jonathan Ayan, a life and annuity insurance broker in Miami, Florida. Homepage showcasing broker information, services offered, and A-rated insurance companies represented (Mutual of Omaha, FNG, Transamerica, Ethos, Forrester, and others).",
+  "architectural_notes": [
+    "Single-page website with homepage focus",
+    "Professional presentation for insurance broker services",
+    "Display broker credentials and company affiliations"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Professional hero background image showing Miami skyline or financial security theme (hero-background.dim_1920x600.png)\n- Simple icon representing life insurance protection (life-insurance-icon.dim_64x64.png)\n- Simple icon representing annuities and retirement planning (annuities-icon.dim_64x64.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-professional-homepage-that-introduces-jonathan-ayan-as-a-life-and-annuity-insurance-broker-based-in-miami-florida",
+      "title": "Create a professional homepage that introduces Jonathan Ayan as a life and annuity insurance broker based in Miami, Florida",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-a-section-showcasing-the-a-rated-insurance-companies-jonathan-represents-including-mutual-of-omaha-fng-transamerica-ethos-and-forrester",
+      "title": "Display a section showcasing the A-rated insurance companies Jonathan represents, including Mutual of Omaha, FNG, Transamerica, Ethos, and Forrester",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-services-section-explaining-life-insurance-and-annuities-offerings-with-clear-descriptions-of-what-assistance-is-available",
+      "title": "Create a services section explaining life insurance and annuities offerings with clear descriptions of what assistance is available",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-include-contact-information-section-for-potential-clients-to-reach-jonathan-ayan",
+      "title": "Include contact information section for potential clients to reach Jonathan Ayan",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-the-homepage-with-a-professional-trustworthy-visual-theme-using-warm-sophisticated-colors-such-as-navy-blue-gold-accents-and-crisp-whites-clean-typography-and-a-layout-that-conveys-stability-and-expertise-appropriate-for-financial-services",
+      "title": "Design the homepage with a professional, trustworthy visual theme using warm, sophisticated colors (such as navy blue, gold accents, and crisp whites), clean typography, and a layout that conveys stability and expertise appropriate for financial services",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create homepage with broker information and services",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Display A-rated insurance companies represented",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Show contact information and Miami, Florida location",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Jonathan Ayan Insurance Broker Website",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
