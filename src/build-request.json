@@ -1,94 +1,35 @@
 {
   "kind": "build_request",
-  "title": "Fix contact form submission error",
+  "title": "Update admin whitelist with correct Principal ID",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-65",
-      "text": "In the ContactSection component (frontend/src/components/ContactSection.tsx), add comprehensive error logging to the form submission handler to capture the exact error message and details when the submit operation fails",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "it does not let me submit form on the website. it shows error submitting"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Error logging captures the full error object including message, stack trace, and any backend response details",
-        "Console logs show clear, readable error information when form submission fails",
-        "Error state displays the specific error message to help diagnose the issue"
-      ]
-    },
-    {
-      "id": "REQ-66",
-      "text": "In the useSubmitContactForm mutation hook (frontend/src/hooks/useQueries.ts), add error handling and logging to identify whether the submission failure is due to actor unavailability, network issues, backend method errors, or data validation problems",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "it does not let me submit form on the website. it shows error submitting"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Hook logs the actor availability state before attempting submission",
-        "Network errors are caught and logged with full details",
-        "Backend method call failures include the method name and parameters sent",
-        "Console clearly indicates which stage of submission failed"
-      ]
-    },
-    {
-      "id": "REQ-67",
-      "text": "In the backend main.mo actor, verify the saveContactFormSubmission method correctly handles all required fields (firstName, lastName, state, productInterest, coverageAmount, age, gender, comments, bestTimeToContact, bestDayToContact) and add error logging for any validation or storage failures",
+      "id": "REQ-1",
+      "text": "Replace the existing whitelisted Principal ID 'o6emp-est7q-rcxzc-yzqpr-bfbh5-2wpes-yh7ir-zzpdu-w7brm-eo53w-xqe' with the correct Principal ID '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-sqe' in the backend admin whitelist",
       "target": "backend",
       "source": {
         "messageIds": [
           "msg-latest"
         ],
         "quotes": [
-          "it does not let me submit form on the website. it shows error submitting"
+          "My principle id is : 5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-sqe"
         ]
       },
       "acceptanceCriteria": [
-        "Backend method validates all required fields and returns clear error messages for invalid data",
-        "Storage operations are wrapped in error handling that logs failure reasons",
-        "Method returns success/failure status that frontend can interpret",
-        "All enum conversions (Gender, ProductInterest) handle invalid values gracefully"
-      ]
-    },
-    {
-      "id": "REQ-68",
-      "text": "In the ContactSection component (frontend/src/components/ContactSection.tsx), ensure all form fields have valid default values and that bestTimeToContact and bestDayToContact fields are properly initialized and validated before submission",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ],
-        "quotes": [
-          "it does not let me submit form on the website. it shows error submitting"
-        ]
-      },
-      "acceptanceCriteria": [
-        "All form fields have appropriate default values that match backend expected types",
-        "BestTimeToContact field value is properly formatted (specific hour string)",
-        "BestDayToContact field value is a valid day number (1-31) as a string",
-        "Form validation prevents submission if required fields are missing or invalid",
-        "Client-side validation messages clearly indicate which fields need correction"
+        "The Principal ID '5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-sqe' is added to the admin whitelist in backend/main.mo",
+        "The old Principal ID 'o6emp-est7q-rcxzc-yzqpr-bfbh5-2wpes-yh7ir-zzpdu-w7brm-eo53w-xqe' is removed from the whitelist",
+        "User can successfully access the admin panel at /admin without seeing 'Access Denied' when authenticated with the correct Principal ID"
       ]
     }
   ],
   "constraints": [
-    "Do not change the backend ContactFormSubmission data model structure",
-    "Maintain the existing useActor hook implementation for actor initialization",
-    "Preserve the current Internet Identity authentication flow"
+    "Preserve all existing admin panel functionality and access control logic",
+    "Maintain the MixinAuthorization and AccessControl module patterns used in the current implementation"
   ],
   "nonGoals": [
-    "Redesigning the contact form UI layout",
-    "Adding new form fields beyond the existing ones",
-    "Changing the admin panel submission viewing functionality"
+    "Adding multiple admin users",
+    "Implementing dynamic admin management UI",
+    "Changing the authentication mechanism"
   ],
   "imageRequirements": {
     "required": [],

@@ -1,19 +1,18 @@
 import List "mo:core/List";
 import Map "mo:core/Map";
-import Array "mo:core/Array";
 import Principal "mo:core/Principal";
 import Runtime "mo:core/Runtime";
+import Array "mo:core/Array";
+import Text "mo:core/Text";
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
-import Text "mo:core/Text";
-
 
 actor {
-  // Initialize the access control system
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
 
-  // User Profile Type
+  let admins = List.fromArray([Principal.fromText("5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-sqe")]);
+
   public type UserProfile = {
     name : Text;
   };
@@ -22,7 +21,7 @@ actor {
 
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can access profiles");
+      Runtime.trap("Unauthorized: Only users can save profiles");
     };
     userProfiles.get(caller);
   };
@@ -53,7 +52,7 @@ actor {
     #nonBinary;
   };
 
-  type ContactFormSubmission = {
+  public type ContactFormSubmission = {
     firstName : Text;
     lastName : Text;
     state : Text;
@@ -68,6 +67,7 @@ actor {
 
   let submissions = List.empty<ContactFormSubmission>();
 
+  // Don't change needed for this one
   // Public contact form submission - allows guests (no authorization check)
   public shared ({ caller }) func submitContactForm(
     firstName : Text,
