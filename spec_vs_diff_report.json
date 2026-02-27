@@ -1,0 +1,43 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-27T15:45:58.474Z",
+  "summary": "The diff addresses REQ-1 by fixing the useSubmitContactForm mutation in useQueries.ts (enum mapping, BigInt conversion), updating the backend to persist submissions correctly (migration + renamed stable variable), and documenting that ContactSection.tsx handles success messages. However, the diff does not show explicit changes to ContactSection.tsx to display a success message instead of an error alert, and inline validation error display in ContactSection.tsx cannot be verified from the diff.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "A success message is displayed after a successful form submission (instead of an error alert) in ContactSection.tsx",
+      "reason": "The diff does not include any changes to ContactSection.tsx. The frontend-file-summaries.txt mentions ContactSection.tsx has validation and error logging but does not confirm a success message was added or that the error alert path was removed. The fix to useQueries.ts alone does not satisfy the UI-level acceptance criterion.",
+      "evidence": [
+        "frontend/src/components/ContactSection.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "id": "REQ-1",
+      "requirement": "Form validation errors are shown inline and do not trigger the submission error path",
+      "reason": "No changes to ContactSection.tsx are present in the diff, so it cannot be confirmed that inline validation errors were implemented or that the submission error path was properly guarded.",
+      "evidence": [
+        "frontend/src/components/ContactSection.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Backend migration module renaming the 'submissions' stable variable to 'persistentSubmissions'",
+      "reason": "The build request only asked to fix the contact form submission error. A stable variable rename and a dedicated migration module (migration.mo) were not requested and go beyond the specified scope.",
+      "evidence": [
+        "backend/migration.mo",
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "confidence": 0.72,
+  "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "frontend-file-summaries.txt",
+    "frontend/src/hooks/useQueries.ts",
+    "project_state.json"
+  ]
+}

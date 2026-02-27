@@ -1,0 +1,40 @@
+{
+  "kind": "build_request",
+  "title": "Fix contact form submission error",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Investigate and fix the contact form submission error in ContactSection.tsx and the useSubmitContactForm hook (useQueries.ts). Ensure the form submits successfully to the backend, handles the response correctly, and displays a success message on completion instead of an error alert.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-8"
+        ],
+        "quotes": [
+          "the form comes up as error when trying to submit. need fix"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Submitting the contact form with valid data does not display an error alert",
+        "A success message is displayed after a successful form submission",
+        "The backend correctly receives and stores the submitted form data",
+        "The submitContactForm mutation in useQueries.ts resolves without error for valid input",
+        "Form validation errors are shown inline and do not trigger the submission error path"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not change the contact form fields or their labels",
+    "Do not modify files listed in frontend.immutablePaths"
+  ],
+  "nonGoals": [
+    "Adding new form fields",
+    "Redesigning the contact form UI",
+    "Building a new submissions view (separate request)"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

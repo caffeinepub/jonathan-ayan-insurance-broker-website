@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Project with a form submission feature; form is currently broken (submit error) and needs a fix.",
+  "architectural_notes": [],
+  "known_issues": [
+    "Form submission returns an error when users try to submit — needs immediate fix."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-investigate-and-fix-the-contact-form-submission-error-in-contactsection-tsx-and-the-usesubmitcontactform-hook-usequeries-ts-ensure-the-form-submits-successfully-to-the-backend-handles-the-response-correctly-and-displays-a-success-message-on-completion-instead-of-an-error-alert",
+      "title": "Investigate and fix the contact form submission error in ContactSection.tsx and the useSubmitContactForm hook (useQueries.ts). Ensure the form submits successfully to the backend, handles the response correctly, and displays a success message on completion instead of an error alert.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [],
+  "projectName": "Fix contact form submission error",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

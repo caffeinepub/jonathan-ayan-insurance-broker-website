@@ -1,0 +1,24 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-investigate-and-fix-the-contact-form-submission-error-in-contactsection-tsx-and-the-usesubmitcontactform-hook-usequeries-ts-ensure-the-form-submits-successfully-to-the-backend-handles-the-response-correctly-and-displays-a-success-message-on-completion-instead-of-an-error-alert",
+      "featureTitle": "Investigate and fix the contact form submission error in ContactSection.tsx and the useSubmitContactForm hook (useQueries.ts). Ensure the form submits successfully to the backend, handles the response correctly, and displays a success message on completion instead of an error alert.",
+      "files": [
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
