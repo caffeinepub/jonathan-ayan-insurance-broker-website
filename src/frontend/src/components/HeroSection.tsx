@@ -46,7 +46,8 @@ export default function HeroSection() {
               <Button
                 size="lg"
                 onClick={scrollToContact}
-                className="bg-gold hover:bg-gold-dark text-navy font-semibold px-8 py-6 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all"
+                className="bg-white hover:bg-gray-100 text-navy font-semibold px-8 py-6 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all border-2 border-white"
+                data-ocid="hero.get_started.primary_button"
               >
                 Get Started Today
               </Button>

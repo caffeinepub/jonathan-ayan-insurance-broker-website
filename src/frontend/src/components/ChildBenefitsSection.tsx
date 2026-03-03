@@ -2,7 +2,10 @@ import { Shield, Sparkles, TrendingUp } from "lucide-react";
 
 export default function ChildBenefitsSection() {
   return (
-    <section className="py-16 bg-gradient-to-br from-navy via-navy-dark to-navy relative overflow-hidden">
+    <section
+      className="py-16 relative overflow-hidden"
+      style={{ background: "oklch(0.22 0.15 240)" }}
+    >
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-gold rounded-full blur-3xl" />

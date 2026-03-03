@@ -4,11 +4,11 @@ export default function CompaniesSection() {
   const carriers = [
     {
       name: "Mutual of Omaha",
-      logo: "/assets/generated/mutual-of-omaha-logo.dim_400x200.png",
+      logo: "/assets/generated/mutual-of-omaha-logo-v2.dim_400x200.png",
     },
     {
       name: "Transamerica",
-      logo: "/assets/generated/transamerica-logo.dim_400x200.png",
+      logo: "/assets/generated/transamerica-logo-v2.dim_400x200.png",
     },
     {
       name: "Ethos",

@@ -27,6 +27,7 @@ import {
   Phone,
 } from "lucide-react";
 import { useState } from "react";
+import { useActor } from "../hooks/useActor";
 import { useSubmitContactForm } from "../hooks/useQueries";
 
 const US_STATES = [
@@ -131,6 +132,7 @@ export default function ContactSection() {
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const submitForm = useSubmitContactForm();
+  const { actor, isFetching: actorLoading } = useActor();
 
   const validateForm = (): boolean => {
     const errors: string[] = [];
@@ -195,6 +197,14 @@ export default function ContactSection() {
       JSON.stringify(formData, null, 2),
     );
 
+    // Guard: actor must be available before submitting
+    if (!actor) {
+      setErrorMessage(
+        "Still connecting to the server. Please wait a moment and try again.",
+      );
+      return;
+    }
+
     // Client-side validation
     if (!validateForm()) {
       console.error("Form validation failed:", validationErrors);
@@ -208,7 +218,9 @@ export default function ContactSection() {
         lastName: formData.lastName,
         state: formData.state,
         productInterest: formData.productInterest as
-          | "life-insurance"
+          | "term-life-insurance"
+          | "whole-life-insurance"
+          | "indexed-whole-life-insurance"
           | "annuities",
         coverageAmount: formData.coverageAmount,
         age: formData.age,
@@ -411,8 +423,14 @@ export default function ContactSection() {
                       <SelectValue placeholder="Select product type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="life-insurance">
-                        Life Insurance
+                      <SelectItem value="term-life-insurance">
+                        Term Life Insurance
+                      </SelectItem>
+                      <SelectItem value="whole-life-insurance">
+                        Whole Life Insurance
+                      </SelectItem>
+                      <SelectItem value="indexed-whole-life-insurance">
+                        Indexed Whole Life Insurance
                       </SelectItem>
                       <SelectItem value="annuities">Annuities</SelectItem>
                     </SelectContent>
@@ -582,10 +600,15 @@ export default function ContactSection() {
                 <Button
                   type="submit"
                   size="lg"
-                  disabled={submitForm.isPending}
-                  className="w-full bg-gradient-to-r from-gold to-gold-dark hover:from-gold-dark hover:to-gold text-navy font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all"
+                  disabled={submitForm.isPending || actorLoading || !actor}
+                  className="w-full bg-white hover:bg-gray-100 text-navy border-2 border-navy font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all"
+                  data-ocid="contact.form.submit_button"
                 >
-                  {submitForm.isPending ? "Submitting..." : "Submit Request"}
+                  {actorLoading || !actor
+                    ? "Loading..."
+                    : submitForm.isPending
+                      ? "Submitting..."
+                      : "Submit Request"}
                 </Button>
               </form>
 

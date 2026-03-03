@@ -50,16 +50,40 @@ export function useIsCallerAdmin() {
   const query = useQuery<boolean>({
     queryKey: ["isAdmin"],
     queryFn: async () => {
-      if (!actor) {
-        throw new Error("Actor not available");
-      }
+      if (!actor) return false;
       try {
-        const isAdmin = await actor.isCallerAdmin();
-        return isAdmin;
-      } catch (error) {
-        console.error("[useIsCallerAdmin] Error checking admin status:", error);
-        throw error;
+        return await actor.isCallerAdmin();
+      } catch {
+        // Backend traps if user not registered in access control — treat as not admin
+        return false;
       }
+    },
+    enabled: !!actor && !actorFetching && loginStatus !== "initializing",
+    retry: false,
+  });
+
+  return {
+    ...query,
+    isLoading:
+      actorFetching || loginStatus === "initializing" || query.isLoading,
+    isFetched: !!actor && loginStatus !== "initializing" && query.isFetched,
+  };
+}
+
+export function useIsCallerOwner() {
+  const { actor, isFetching: actorFetching } = useActor();
+  const { loginStatus } = useInternetIdentity();
+
+  const query = useQuery<boolean>({
+    queryKey: ["isOwner"],
+    queryFn: async () => {
+      if (!actor) throw new Error("Actor not available");
+      // isCallerOwner is available on the backend but not yet in generated types;
+      // cast to access it directly
+      const extendedActor = actor as typeof actor & {
+        isCallerOwner: () => Promise<boolean>;
+      };
+      return extendedActor.isCallerOwner();
     },
     enabled: !!actor && !actorFetching && loginStatus !== "initializing",
     retry: 2,
@@ -96,8 +120,12 @@ export function useSubmitContactForm() {
       }
 
       // Map frontend productInterest value to backend enum
+      // The backend uses lifeInsurance for all life insurance variants
       let productInterest: ProductInterest;
       if (
+        data.productInterest === "term-life-insurance" ||
+        data.productInterest === "whole-life-insurance" ||
+        data.productInterest === "indexed-whole-life-insurance" ||
         data.productInterest === "life-insurance" ||
         data.productInterest === "lifeInsurance"
       ) {
@@ -135,6 +163,18 @@ export function useSubmitContactForm() {
       }
       const ageBigInt = BigInt(ageInt);
 
+      // Embed the specific product label in additionalComments so it is preserved in the admin view
+      const productLabel: Record<string, string> = {
+        "term-life-insurance": "Term Life Insurance",
+        "whole-life-insurance": "Whole Life Insurance",
+        "indexed-whole-life-insurance": "Indexed Whole Life Insurance",
+        annuities: "Annuities",
+      };
+      const productNote = `Product Interest: ${productLabel[data.productInterest] ?? data.productInterest}`;
+      const fullComments = data.additionalComments
+        ? `${productNote}\n\n${data.additionalComments}`
+        : productNote;
+
       return actor.submitContactForm(
         data.firstName,
         data.lastName,
@@ -143,7 +183,7 @@ export function useSubmitContactForm() {
         coverageAmountBigInt,
         ageBigInt,
         gender,
-        data.additionalComments,
+        fullComments,
         data.bestTimeToContact,
         data.bestDayToContact,
       );

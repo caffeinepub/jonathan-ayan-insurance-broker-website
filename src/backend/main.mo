@@ -9,15 +9,22 @@ import MixinAuthorization "authorization/MixinAuthorization";
 
 
 actor {
-  // Initialize the access control state with a stable variable
-  stable let accessControlState = AccessControl.initState();
+  // Initialize the access control state
+  let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
+
+  // Jonathan Ayan's Principal ID — always has owner/admin access regardless of role system
+  private let OWNER_PRINCIPAL : Text = "5xjc2-y22qo-6hyhb-cz5mg-dskju-ngytr-slbw7-lwush-4ucbp-glcln-sqe";
+
+  // Check if caller is the hardcoded owner
+  private func isOwner(caller : Principal) : Bool {
+    caller.toText() == OWNER_PRINCIPAL
+  };
 
   // TYPES
 
   public type UserProfile = {
     name : Text;
-    // Other user metadata if needed, e.g., email, phone, etc.
   };
 
   type ProductInterest = {
@@ -44,15 +51,23 @@ actor {
     bestDayToContact : Text;
   };
 
-  // DATA STRUCTURES - marked as stable to persist across upgrades
+  // DATA STRUCTURES - persist across upgrades
 
-  stable let userProfiles = Map.empty<Principal, UserProfile>();
-  stable let persistentSubmissions = List.empty<ContactFormSubmission>();
+  let userProfiles = Map.empty<Principal, UserProfile>();
+  let persistentSubmissions = List.empty<ContactFormSubmission>();
 
   // BACKEND LOGIC
 
-  // Get current user profile (requires user permission)
+  // Check if caller is the site owner (hardcoded Principal ID)
+  public query ({ caller }) func isCallerOwner() : async Bool {
+    isOwner(caller)
+  };
+
+  // Get current user profile (requires user permission or owner)
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
+    if (isOwner(caller)) {
+      return userProfiles.get(caller);
+    };
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can view profiles");
     };
@@ -61,24 +76,24 @@ actor {
 
   // Get profile of any user (only accessible by profile owner or admin)
   public query ({ caller }) func getUserProfile(user : Principal) : async ?UserProfile {
-    if (caller != user and not AccessControl.isAdmin(accessControlState, caller)) {
+    if (caller != user and not AccessControl.isAdmin(accessControlState, caller) and not isOwner(caller)) {
       Runtime.trap("Unauthorized: Can only view your own profile");
     };
     userProfiles.get(user);
   };
 
-  // Save current user profile (requires user permission)
+  // Save current user profile (requires user permission or owner)
   public shared ({ caller }) func saveCallerUserProfile(
     profile : UserProfile,
   ) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+    if (not isOwner(caller) and not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can save profiles");
     };
     userProfiles.add(caller, profile);
   };
 
   // Public contact form submission - allows guests (no authorization check)
-  public shared ({ caller }) func submitContactForm(
+  public shared func submitContactForm(
     firstName : Text,
     lastName : Text,
     state : Text,
@@ -102,23 +117,22 @@ actor {
       bestTimeToContact;
       bestDayToContact;
     };
-    persistentSubmissions.add(newSubmission); // Directly add to the persistent list
+    persistentSubmissions.add(newSubmission);
   };
 
-  // Admin panel access - requires admin permission
+  // Admin panel access - requires admin permission OR owner
   public query ({ caller }) func getAdminPanel() : async [ContactFormSubmission] {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+    if (not isOwner(caller) and not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
       Runtime.trap("Unauthorized: Only admins can access the admin panel");
     };
-    persistentSubmissions.toArray(); // Convert persistent list to array
+    persistentSubmissions.toArray();
   };
 
-  // Get all submissions (requires admin permission)
+  // Get all submissions (requires admin permission OR owner)
   public query ({ caller }) func getAllSubmissions() : async [ContactFormSubmission] {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+    if (not isOwner(caller) and not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
       Runtime.trap("Unauthorized: Only admins can view all submissions");
     };
-    persistentSubmissions.toArray(); // Convert persistent list to array
+    persistentSubmissions.toArray();
   };
 };
-
