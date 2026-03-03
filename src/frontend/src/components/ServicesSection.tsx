@@ -1,5 +1,11 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, TrendingUp } from 'lucide-react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Shield, TrendingUp } from "lucide-react";
 
 export default function ServicesSection() {
   return (
@@ -31,7 +37,8 @@ export default function ServicesSection() {
             Comprehensive Insurance Solutions
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Expert guidance and personalized service for all your life insurance and annuity needs
+            Expert guidance and personalized service for all your life insurance
+            and annuity needs
           </p>
         </div>
 
@@ -44,24 +51,36 @@ export default function ServicesSection() {
                   <Shield className="w-10 h-10 text-accent-blue" />
                 </div>
               </div>
-              <CardTitle className="text-3xl font-bold text-navy">Life Insurance</CardTitle>
+              <CardTitle className="text-3xl font-bold text-navy">
+                Life Insurance
+              </CardTitle>
             </CardHeader>
             <CardContent className="pt-6">
               <CardDescription className="text-base text-foreground/80 leading-relaxed mb-6">
-                Protect your loved ones with comprehensive life insurance coverage. I'll help you find the right policy that fits your budget and provides the security your family deserves. Whether you need term life, whole life, or universal life insurance, I have access to competitive rates from top-rated carriers.
+                Protect your loved ones with comprehensive life insurance
+                coverage. I'll help you find the right policy that fits your
+                budget and provides the security your family deserves. Whether
+                you need term life, whole life, or universal life insurance, I
+                have access to competitive rates from top-rated carriers.
               </CardDescription>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full bg-accent-blue mt-2 mr-3 flex-shrink-0" />
-                  <span className="text-foreground/80 font-medium">Term & Permanent Life Insurance</span>
+                  <span className="text-foreground/80 font-medium">
+                    Term & Permanent Life Insurance
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full bg-accent-blue mt-2 mr-3 flex-shrink-0" />
-                  <span className="text-foreground/80 font-medium">Competitive Rates & Fast Approval</span>
+                  <span className="text-foreground/80 font-medium">
+                    Competitive Rates & Fast Approval
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full bg-accent-blue mt-2 mr-3 flex-shrink-0" />
-                  <span className="text-foreground/80 font-medium">Personalized Coverage Analysis</span>
+                  <span className="text-foreground/80 font-medium">
+                    Personalized Coverage Analysis
+                  </span>
                 </li>
               </ul>
             </CardContent>
@@ -75,24 +94,36 @@ export default function ServicesSection() {
                   <TrendingUp className="w-10 h-10 text-gold" />
                 </div>
               </div>
-              <CardTitle className="text-3xl font-bold text-navy">Annuities</CardTitle>
+              <CardTitle className="text-3xl font-bold text-navy">
+                Annuities
+              </CardTitle>
             </CardHeader>
             <CardContent className="pt-6">
               <CardDescription className="text-base text-foreground/80 leading-relaxed mb-6">
-                Secure your retirement with reliable annuity products designed to provide guaranteed income for life. I specialize in helping clients build retirement strategies that offer financial stability and peace of mind. Let me guide you through fixed, variable, and indexed annuity options.
+                Secure your retirement with reliable annuity products designed
+                to provide guaranteed income for life. I specialize in helping
+                clients build retirement strategies that offer financial
+                stability and peace of mind. Let me guide you through fixed,
+                variable, and indexed annuity options.
               </CardDescription>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full bg-gold mt-2 mr-3 flex-shrink-0" />
-                  <span className="text-foreground/80 font-medium">Fixed & Indexed Annuities</span>
+                  <span className="text-foreground/80 font-medium">
+                    Fixed & Indexed Annuities
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full bg-gold mt-2 mr-3 flex-shrink-0" />
-                  <span className="text-foreground/80 font-medium">Guaranteed Lifetime Income</span>
+                  <span className="text-foreground/80 font-medium">
+                    Guaranteed Lifetime Income
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 rounded-full bg-gold mt-2 mr-3 flex-shrink-0" />
-                  <span className="text-foreground/80 font-medium">Retirement Planning Expertise</span>
+                  <span className="text-foreground/80 font-medium">
+                    Retirement Planning Expertise
+                  </span>
                 </li>
               </ul>
             </CardContent>

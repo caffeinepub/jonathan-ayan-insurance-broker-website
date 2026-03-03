@@ -1,4 +1,4 @@
-import { TrendingUp, Shield, Sparkles } from 'lucide-react';
+import { Shield, Sparkles, TrendingUp } from "lucide-react";
 
 export default function ChildBenefitsSection() {
   return (
@@ -21,7 +21,8 @@ export default function ChildBenefitsSection() {
               <Sparkles className="w-8 h-8 text-gold" />
             </div>
             <p className="text-lg text-white/90 max-w-2xl mx-auto">
-              Opening a life insurance policy for your child is one of the smartest financial decisions you can make
+              Opening a life insurance policy for your child is one of the
+              smartest financial decisions you can make
             </p>
           </div>
 
@@ -38,7 +39,10 @@ export default function ChildBenefitsSection() {
                     Tax-Free Wealth Building
                   </h3>
                   <p className="text-white/80 leading-relaxed">
-                    Build substantial tax-free wealth that your child can access at any point in life—for college, a first home, starting a business, or retirement. The earlier you start, the more wealth accumulates.
+                    Build substantial tax-free wealth that your child can access
+                    at any point in life—for college, a first home, starting a
+                    business, or retirement. The earlier you start, the more
+                    wealth accumulates.
                   </p>
                 </div>
               </div>
@@ -55,7 +59,9 @@ export default function ChildBenefitsSection() {
                     Compounded Interest with Market Protection
                   </h3>
                   <p className="text-white/80 leading-relaxed">
-                    Your child's policy grows with compounded interest over time while being protected from market downturns. Enjoy growth potential without the risk of losing principal value.
+                    Your child's policy grows with compounded interest over time
+                    while being protected from market downturns. Enjoy growth
+                    potential without the risk of losing principal value.
                   </p>
                 </div>
               </div>
@@ -65,7 +71,8 @@ export default function ChildBenefitsSection() {
           {/* Call to Action */}
           <div className="mt-8 text-center">
             <p className="text-white/90 text-lg font-medium">
-              Whether at birth or any age, it's never too late to secure your child's financial future.
+              Whether at birth or any age, it's never too late to secure your
+              child's financial future.
             </p>
           </div>
         </div>

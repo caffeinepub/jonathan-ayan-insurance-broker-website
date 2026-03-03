@@ -3,12 +3,13 @@ import Map "mo:core/Map";
 import Principal "mo:core/Principal";
 import Runtime "mo:core/Runtime";
 import AccessControl "authorization/access-control";
-import Array "mo:core/Array";
 import Text "mo:core/Text";
 import MixinAuthorization "authorization/MixinAuthorization";
 
+
+
 actor {
-  // Initialize the access control state with stable variable
+  // Initialize the access control state with a stable variable
   stable let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
 
@@ -46,7 +47,7 @@ actor {
   // DATA STRUCTURES - marked as stable to persist across upgrades
 
   stable let userProfiles = Map.empty<Principal, UserProfile>();
-  stable let submissions = List.empty<ContactFormSubmission>();
+  stable let persistentSubmissions = List.empty<ContactFormSubmission>();
 
   // BACKEND LOGIC
 
@@ -101,7 +102,7 @@ actor {
       bestTimeToContact;
       bestDayToContact;
     };
-    submissions.add(newSubmission);
+    persistentSubmissions.add(newSubmission); // Directly add to the persistent list
   };
 
   // Admin panel access - requires admin permission
@@ -109,7 +110,7 @@ actor {
     if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
       Runtime.trap("Unauthorized: Only admins can access the admin panel");
     };
-    submissions.toArray();
+    persistentSubmissions.toArray(); // Convert persistent list to array
   };
 
   // Get all submissions (requires admin permission)
@@ -117,6 +118,7 @@ actor {
     if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
       Runtime.trap("Unauthorized: Only admins can view all submissions");
     };
-    submissions.toArray();
+    persistentSubmissions.toArray(); // Convert persistent list to array
   };
 };
+

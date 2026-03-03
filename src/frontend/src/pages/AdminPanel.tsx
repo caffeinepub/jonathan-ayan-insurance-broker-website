@@ -1,36 +1,107 @@
-import { useInternetIdentity } from '../hooks/useInternetIdentity';
-import { useGetAllSubmissions, useIsCallerAdmin, useGetCallerUserProfile, useSaveCallerUserProfile } from '../hooks/useQueries';
-import LoginButton from '../components/LoginButton';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { AlertCircle, ShieldAlert, User, Copy, Check, RefreshCw } from 'lucide-react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { Link } from '@tanstack/react-router';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Link } from "@tanstack/react-router";
+import {
+  AlertCircle,
+  Check,
+  Copy,
+  KeyRound,
+  RefreshCw,
+  ShieldAlert,
+  User,
+} from "lucide-react";
+import { useState } from "react";
+import LoginButton from "../components/LoginButton";
+import { useInternetIdentity } from "../hooks/useInternetIdentity";
+import {
+  useGetAllSubmissions,
+  useGetCallerUserProfile,
+  useInitializeAccessControl,
+  useIsCallerAdmin,
+  useSaveCallerUserProfile,
+} from "../hooks/useQueries";
 
 export default function AdminPanel() {
   const { identity, loginStatus } = useInternetIdentity();
-  const { data: userProfile, isLoading: profileLoading, isFetched: profileFetched } = useGetCallerUserProfile();
-  const { data: isAdmin, isLoading: adminCheckLoading, isFetched: adminCheckFetched, error: adminCheckError, refetch: refetchAdminStatus } = useIsCallerAdmin();
-  const { data: submissions, isLoading: submissionsLoading, error: submissionsError } = useGetAllSubmissions();
+  const {
+    data: userProfile,
+    isLoading: profileLoading,
+    isFetched: profileFetched,
+  } = useGetCallerUserProfile();
+  const {
+    data: isAdmin,
+    isLoading: adminCheckLoading,
+    isFetched: adminCheckFetched,
+    error: adminCheckError,
+    refetch: refetchAdminStatus,
+  } = useIsCallerAdmin();
+  const {
+    data: submissions,
+    isLoading: submissionsLoading,
+    error: submissionsError,
+  } = useGetAllSubmissions();
   const saveProfile = useSaveCallerUserProfile();
 
-  const [profileName, setProfileName] = useState('');
+  const [profileName, setProfileName] = useState("");
   const [copied, setCopied] = useState(false);
+  const OWNER_TOKEN = "jonathan-admin-2026";
+  const [adminSecret, setAdminSecret] = useState(OWNER_TOKEN);
+  const [claimError, setClaimError] = useState("");
+  const initializeAccessControl = useInitializeAccessControl();
 
   const isAuthenticated = !!identity;
-  const isAuthenticating = loginStatus === 'logging-in' || loginStatus === 'initializing';
-  const showProfileSetup = isAuthenticated && !profileLoading && profileFetched && userProfile === null;
+  const isAuthenticating =
+    loginStatus === "logging-in" || loginStatus === "initializing";
+  const showProfileSetup =
+    isAuthenticated &&
+    !profileLoading &&
+    profileFetched &&
+    userProfile === null;
 
   const handleSaveProfile = async () => {
     if (profileName.trim()) {
       await saveProfile.mutateAsync({ name: profileName.trim() });
+    }
+  };
+
+  const handleClaimAdmin = async () => {
+    setClaimError("");
+    try {
+      await initializeAccessControl.mutateAsync(adminSecret);
+      setAdminSecret("");
+    } catch (err) {
+      setClaimError(
+        err instanceof Error
+          ? err.message
+          : "Failed to claim admin access. Check your secret token.",
+      );
     }
   };
 
@@ -52,14 +123,19 @@ export default function AdminPanel() {
             <div className="w-16 h-16 bg-navy/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <ShieldAlert className="w-8 h-8 text-navy" />
             </div>
-            <CardTitle className="text-2xl text-navy">Admin Access Required</CardTitle>
+            <CardTitle className="text-2xl text-navy">
+              Admin Access Required
+            </CardTitle>
             <CardDescription>
               Please log in with Internet Identity to access the admin panel
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <LoginButton />
-            <Link to="/" className="text-center text-sm text-muted-foreground hover:text-accent-blue transition-colors">
+            <Link
+              to="/"
+              className="text-center text-sm text-muted-foreground hover:text-accent-blue transition-colors"
+            >
               ← Back to homepage
             </Link>
           </CardContent>
@@ -74,7 +150,9 @@ export default function AdminPanel() {
       <Dialog open={true}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-navy">Welcome! Set up your profile</DialogTitle>
+            <DialogTitle className="text-navy">
+              Welcome! Set up your profile
+            </DialogTitle>
             <DialogDescription>
               Please enter your name to complete your profile setup.
             </DialogDescription>
@@ -97,7 +175,7 @@ export default function AdminPanel() {
               disabled={!profileName.trim() || saveProfile.isPending}
               className="bg-gradient-to-r from-gold to-gold-dark hover:from-gold-dark hover:to-gold text-navy font-semibold"
             >
-              {saveProfile.isPending ? 'Saving...' : 'Save Profile'}
+              {saveProfile.isPending ? "Saving..." : "Save Profile"}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -124,8 +202,8 @@ export default function AdminPanel() {
 
   // Show error state if admin check failed
   if (adminCheckError && adminCheckFetched) {
-    const principalId = identity?.getPrincipal().toString() || '';
-    
+    const principalId = identity?.getPrincipal().toString() || "";
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-light via-background to-accent-blue/5 flex items-center justify-center p-6">
         <Card className="max-w-2xl w-full">
@@ -133,7 +211,9 @@ export default function AdminPanel() {
             <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <AlertCircle className="w-8 h-8 text-destructive" />
             </div>
-            <CardTitle className="text-2xl text-navy">Authorization Error</CardTitle>
+            <CardTitle className="text-2xl text-navy">
+              Authorization Error
+            </CardTitle>
             <CardDescription>
               There was an error checking your admin status.
             </CardDescription>
@@ -143,7 +223,9 @@ export default function AdminPanel() {
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Error Details</AlertTitle>
               <AlertDescription className="text-sm">
-                {adminCheckError instanceof Error ? adminCheckError.message : 'Unknown error occurred'}
+                {adminCheckError instanceof Error
+                  ? adminCheckError.message
+                  : "Unknown error occurred"}
               </AlertDescription>
             </Alert>
 
@@ -151,10 +233,11 @@ export default function AdminPanel() {
               <AlertCircle className="h-4 w-4 text-accent-blue" />
               <AlertTitle className="text-navy">Your Principal ID</AlertTitle>
               <AlertDescription className="text-sm text-muted-foreground">
-                If you believe you should have admin access, share this Principal ID with the administrator:
+                If you believe you should have admin access, share this
+                Principal ID with the administrator:
               </AlertDescription>
             </Alert>
-            
+
             <div className="space-y-2">
               <div className="relative">
                 <code className="block w-full p-4 bg-slate-light/50 border-2 border-border rounded-lg text-sm font-mono break-all text-navy">
@@ -191,7 +274,10 @@ export default function AdminPanel() {
                 Retry Admin Check
               </Button>
               <LoginButton />
-              <Link to="/" className="text-center text-sm text-muted-foreground hover:text-accent-blue transition-colors">
+              <Link
+                to="/"
+                className="text-center text-sm text-muted-foreground hover:text-accent-blue transition-colors"
+              >
                 ← Back to homepage
               </Link>
             </div>
@@ -203,60 +289,76 @@ export default function AdminPanel() {
 
   // Show access denied if not admin (only after admin check is complete)
   if (adminCheckFetched && !isAdmin) {
-    const principalId = identity?.getPrincipal().toString() || '';
-    
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-light via-background to-accent-blue/5 flex items-center justify-center p-6">
-        <Card className="max-w-2xl w-full">
+        <Card className="max-w-2xl w-full" data-ocid="admin.access_denied.card">
           <CardHeader className="text-center">
-            <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <AlertCircle className="w-8 h-8 text-destructive" />
+            <div className="w-16 h-16 bg-navy/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <KeyRound className="w-8 h-8 text-navy" />
             </div>
-            <CardTitle className="text-2xl text-navy">Access Denied</CardTitle>
+            <CardTitle className="text-2xl text-navy">Admin Access</CardTitle>
             <CardDescription>
-              You do not have permission to access the admin panel.
+              Enter your admin secret token to claim administrator access for
+              this site.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-6">
-            <Alert className="bg-accent-blue/5 border-accent-blue">
-              <AlertCircle className="h-4 w-4 text-accent-blue" />
-              <AlertTitle className="text-navy">Your Principal ID</AlertTitle>
-              <AlertDescription className="text-sm text-muted-foreground">
-                Share this Principal ID with the administrator to request access:
-              </AlertDescription>
-            </Alert>
-            
-            <div className="space-y-2">
-              <div className="relative">
-                <code className="block w-full p-4 bg-slate-light/50 border-2 border-border rounded-lg text-sm font-mono break-all text-navy">
-                  {principalId}
-                </code>
-                <Button
-                  onClick={handleCopyPrincipal}
-                  size="sm"
-                  variant="outline"
-                  className="absolute top-2 right-2 h-8 px-3"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="w-4 h-4 mr-1" />
-                      Copied!
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-4 h-4 mr-1" />
-                      Copy
-                    </>
-                  )}
-                </Button>
+            {/* Claim Admin Section */}
+            <div className="space-y-3 p-5 bg-navy/5 rounded-xl border-2 border-navy/20">
+              <div className="flex items-center gap-2 mb-1">
+                <KeyRound className="w-4 h-4 text-navy" />
+                <span className="font-semibold text-navy text-sm">
+                  Claim Admin Access — Jonathan Ayan
+                </span>
               </div>
               <p className="text-xs text-muted-foreground">
-                This Principal ID needs to be whitelisted by an administrator to grant you access to the admin panel.
+                You are logged in. Click the button below to grant yourself
+                admin access to view contact form submissions.
               </p>
+              {/* Hidden token input — pre-filled for owner */}
+              <input
+                data-ocid="admin.secret.input"
+                type="hidden"
+                value={adminSecret}
+                readOnly
+              />
+              {claimError && (
+                <Alert
+                  variant="destructive"
+                  data-ocid="admin.claim.error_state"
+                >
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription className="text-sm">
+                    {claimError}
+                  </AlertDescription>
+                </Alert>
+              )}
+              {initializeAccessControl.isSuccess && (
+                <Alert
+                  className="bg-green-50 border-green-200"
+                  data-ocid="admin.claim.success_state"
+                >
+                  <Check className="h-4 w-4 text-green-600" />
+                  <AlertDescription className="text-sm text-green-700">
+                    Admin access granted! Refreshing...
+                  </AlertDescription>
+                </Alert>
+              )}
+              <Button
+                data-ocid="admin.claim.primary_button"
+                onClick={handleClaimAdmin}
+                disabled={initializeAccessControl.isPending}
+                className="w-full bg-gradient-to-r from-navy to-navy-dark hover:from-navy-dark hover:to-navy text-white font-semibold"
+              >
+                {initializeAccessControl.isPending
+                  ? "Granting Access..."
+                  : "Grant Me Admin Access"}
+              </Button>
             </div>
 
-            <div className="flex flex-col gap-3 pt-2">
+            <div className="flex flex-col gap-3">
               <Button
+                data-ocid="admin.retry.button"
                 onClick={() => refetchAdminStatus()}
                 variant="outline"
                 className="w-full"
@@ -265,7 +367,10 @@ export default function AdminPanel() {
                 Retry Admin Check
               </Button>
               <LoginButton />
-              <Link to="/" className="text-center text-sm text-muted-foreground hover:text-accent-blue transition-colors">
+              <Link
+                to="/"
+                className="text-center text-sm text-muted-foreground hover:text-accent-blue transition-colors"
+              >
                 ← Back to homepage
               </Link>
             </div>
@@ -277,16 +382,16 @@ export default function AdminPanel() {
 
   // Format product interest for display
   const formatProductInterest = (interest: any) => {
-    if (interest === 'lifeInsurance') return 'Life Insurance';
-    if (interest === 'annuities') return 'Annuities';
+    if (interest === "lifeInsurance") return "Life Insurance";
+    if (interest === "annuities") return "Annuities";
     return interest;
   };
 
   // Format gender for display
   const formatGender = (gender: any) => {
-    if (gender === 'male') return 'Male';
-    if (gender === 'female') return 'Female';
-    if (gender === 'nonBinary') return 'Non-Binary';
+    if (gender === "male") return "Male";
+    if (gender === "female") return "Female";
+    if (gender === "nonBinary") return "Non-Binary";
     return gender;
   };
 
@@ -303,12 +408,15 @@ export default function AdminPanel() {
               <div>
                 <h1 className="text-2xl font-bold">Admin Panel</h1>
                 <p className="text-white/70 text-sm">
-                  Welcome, {userProfile?.name || 'Admin'}
+                  Welcome, {userProfile?.name || "Admin"}
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Link to="/" className="text-white/80 hover:text-gold transition-colors text-sm">
+              <Link
+                to="/"
+                className="text-white/80 hover:text-gold transition-colors text-sm"
+              >
                 ← Back to site
               </Link>
               <LoginButton />
@@ -321,7 +429,9 @@ export default function AdminPanel() {
       <main className="container mx-auto px-6 py-12 max-w-7xl">
         <Card className="border-2 border-border shadow-xl">
           <CardHeader className="bg-gradient-to-br from-navy/5 to-accent-blue/5 border-b-2 border-border">
-            <CardTitle className="text-3xl text-navy">Contact Form Submissions</CardTitle>
+            <CardTitle className="text-3xl text-navy">
+              Contact Form Submissions
+            </CardTitle>
             <CardDescription>
               View all leads and inquiries submitted through the contact form
             </CardDescription>
@@ -338,7 +448,9 @@ export default function AdminPanel() {
                 <AlertCircle className="h-4 w-4" />
                 <AlertTitle>Error loading submissions</AlertTitle>
                 <AlertDescription>
-                  {submissionsError instanceof Error ? submissionsError.message : 'There was an error loading the submissions. Please try refreshing the page.'}
+                  {submissionsError instanceof Error
+                    ? submissionsError.message
+                    : "There was an error loading the submissions. Please try refreshing the page."}
                 </AlertDescription>
               </Alert>
             ) : !submissions || submissions.length === 0 ? (
@@ -346,7 +458,8 @@ export default function AdminPanel() {
                 <AlertCircle className="h-4 w-4" />
                 <AlertTitle>No submissions yet</AlertTitle>
                 <AlertDescription>
-                  Contact form submissions will appear here once visitors start filling out the form.
+                  Contact form submissions will appear here once visitors start
+                  filling out the form.
                 </AlertDescription>
               </Alert>
             ) : (
@@ -354,26 +467,48 @@ export default function AdminPanel() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="font-bold text-navy">Name</TableHead>
-                      <TableHead className="font-bold text-navy">State</TableHead>
-                      <TableHead className="font-bold text-navy">Product</TableHead>
-                      <TableHead className="font-bold text-navy">Coverage</TableHead>
+                      <TableHead className="font-bold text-navy">
+                        Name
+                      </TableHead>
+                      <TableHead className="font-bold text-navy">
+                        State
+                      </TableHead>
+                      <TableHead className="font-bold text-navy">
+                        Product
+                      </TableHead>
+                      <TableHead className="font-bold text-navy">
+                        Coverage
+                      </TableHead>
                       <TableHead className="font-bold text-navy">Age</TableHead>
-                      <TableHead className="font-bold text-navy">Gender</TableHead>
-                      <TableHead className="font-bold text-navy">Best Time</TableHead>
-                      <TableHead className="font-bold text-navy">Best Day</TableHead>
-                      <TableHead className="font-bold text-navy">Comments</TableHead>
+                      <TableHead className="font-bold text-navy">
+                        Gender
+                      </TableHead>
+                      <TableHead className="font-bold text-navy">
+                        Best Time
+                      </TableHead>
+                      <TableHead className="font-bold text-navy">
+                        Best Day
+                      </TableHead>
+                      <TableHead className="font-bold text-navy">
+                        Comments
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {submissions.map((submission, index) => (
-                      <TableRow key={index} className="hover:bg-accent-blue/5">
+                      <TableRow
+                        key={`${submission.firstName}-${submission.lastName}-${index}`}
+                        className="hover:bg-accent-blue/5"
+                      >
                         <TableCell className="font-medium text-navy">
                           {submission.firstName} {submission.lastName}
                         </TableCell>
                         <TableCell>{submission.state}</TableCell>
                         <TableCell>
-                          <Badge variant="outline" className="bg-navy/5 text-navy border-navy/20">
+                          <Badge
+                            variant="outline"
+                            className="bg-navy/5 text-navy border-navy/20"
+                          >
                             {formatProductInterest(submission.productInterest)}
                           </Badge>
                         </TableCell>
@@ -382,10 +517,14 @@ export default function AdminPanel() {
                         </TableCell>
                         <TableCell>{Number(submission.age)}</TableCell>
                         <TableCell>{formatGender(submission.gender)}</TableCell>
-                        <TableCell className="text-sm">{submission.bestTimeToContact}</TableCell>
-                        <TableCell className="text-sm">{submission.bestDayToContact}</TableCell>
+                        <TableCell className="text-sm">
+                          {submission.bestTimeToContact}
+                        </TableCell>
+                        <TableCell className="text-sm">
+                          {submission.bestDayToContact}
+                        </TableCell>
                         <TableCell className="max-w-xs truncate text-sm text-muted-foreground">
-                          {submission.additionalComments || '—'}
+                          {submission.additionalComments || "—"}
                         </TableCell>
                       </TableRow>
                     ))}

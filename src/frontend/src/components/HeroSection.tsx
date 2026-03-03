@@ -1,9 +1,9 @@
-import { Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
+import { Shield } from "lucide-react";
 
 export default function HeroSection() {
   const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -28,19 +28,20 @@ export default function HeroSection() {
                 <Shield className="w-10 h-10 text-gold" />
               </div>
             </div>
-            
+
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-tight">
               Jonathan Ayan
             </h1>
-            
+
             <p className="text-xl md:text-2xl text-gold font-semibold mb-3">
               Life & Annuity Insurance Broker
             </p>
-            
+
             <p className="text-lg text-white/90 mb-8 max-w-xl mx-auto lg:mx-0">
-              Serving all 50 states with access to all A+ rated insurance companies in the country
+              Serving all 50 states with access to all A+ rated insurance
+              companies in the country
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button
                 size="lg"
